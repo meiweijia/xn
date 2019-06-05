@@ -81,14 +81,18 @@ class ConfigController extends Controller
 
         $grid->id('Id');
         $grid->name('Name');
-        $grid->value('值');
+        $grid->value('值')->editable();
         $grid->description('描述');
 
         $grid->disableCreateButton();
         $grid->disableFilter();
-        $grid->actions(function ($actions) {
-            $actions->disableDelete();
-            $actions->disableView();
+        $grid->disableActions();
+
+        $grid->tools(function ($tools) {
+            //关闭批量删除
+            $tools->batch(function ($batch) {
+                $batch->disableDelete();
+            });
         });
 
         return $grid;
