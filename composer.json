@@ -15,6 +15,7 @@
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "maatwebsite/excel": "^3.1",
+        "overtrue/easy-sms": "^1.1",
         "overtrue/laravel-wechat": "~5.0",
         "predis/predis": "^1.1",
         "spatie/laravel-permission": "^2.37"
@@ -44,6 +45,9 @@
         "classmap": [
             "database/seeds",
             "database/factories"
+        ],
+        "files":[
+            "app/Extends/helper.php"
         ]
     },
     "autoload-dev": {

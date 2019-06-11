@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "02ec78595c79d6418ba7d3858d543696",
+    "content-hash": "8aeba14cc624b30d7b4305c5f250607e",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1618,6 +1618,47 @@
                 "serialize"
             ],
             "time": "2019-05-31T20:04:32+00:00"
+        },
+        {
+            "name": "overtrue/easy-sms",
+            "version": "1.1.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/overtrue/easy-sms.git",
+                "reference": "ad4adc9170d0540e6281c7adb32475d747029fa7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/overtrue/easy-sms/zipball/ad4adc9170d0540e6281c7adb32475d747029fa7",
+                "reference": "ad4adc9170d0540e6281c7adb32475d747029fa7",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.2",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "mockery/mockery": "1.2.2",
+                "phpunit/phpunit": "^5.7 || ^7.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Overtrue\\EasySms\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "overtrue",
+                    "email": "i@overtrue.me"
+                }
+            ],
+            "description": "The easiest way to send short message.",
+            "time": "2019-04-26T08:24:28+00:00"
         },
         {
             "name": "overtrue/laravel-wechat",

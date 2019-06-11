@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -17,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'tel', 'open_id', 'avatar'
     ];
 
     /**
@@ -38,4 +39,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            //创建token
+            if (!$model->api_token) {
+                $model->api_token = Str::random(80);
+                if (!$model->api_token) {
+                    return false;
+                }
+            }
+            //默认头像
+            if (!$model->avatar) {
+                $model->avatar = asset('storage/images/avatar/default.png');
+            }
+        });
+    }
 }

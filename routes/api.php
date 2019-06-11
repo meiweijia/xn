@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,10 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::name('api.user.')->prefix('user')->group(function () {
+    Route::post('register', 'UserController@register')->name('register');
+    Route::post('login', 'UserController@login')->name('login');
+    Route::post('verifyCode', 'UserController@verifyCode')->name('verifyCode');
 });
