@@ -22,6 +22,9 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'all']);//所有权限
 
         // 创建角色并分配创建的权限
+        $role = Role::create(['name' => 'guest']);//游客
+        $role->givePermissionTo('view');
+
         $role = Role::create(['name' => 'grade1']);//一级会员
         $role->givePermissionTo('view');
 

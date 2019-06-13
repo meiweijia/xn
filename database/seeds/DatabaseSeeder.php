@@ -17,5 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(HouseSeeder::class);
         $this->call(RentLogSeeder::class);
         $this->call(TenantSeeder::class);
+        $this->call(RolesAndPermissionsSeeder::class);
+        $this->call(OrderSeeder::class);
     }
 }

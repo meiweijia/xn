@@ -20,6 +20,8 @@ class CreateHousesTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->unsignedBigInteger('property_id')->default(0)->comment('物业');
             $table->foreign('property_id')->references('id')->on('properties');
+            $table->unsignedBigInteger('user_id')->nullable()->default(null)->comment('用户ID');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('household')->nullable()->comment('户型');
             $table->unsignedInteger('rent')->default(0)->comment('租金');
             $table->string('image')->nullable()->default(null)->comment('封面图');

@@ -19,7 +19,7 @@ class CreateOrderItemsTable extends Migration
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->unsignedBigInteger('house_id');
             $table->foreign('house_id')->references('id')->on('houses')->onDelete('cascade');
-            $table->decimal('price', 10, 2);
+            $table->unsignedInteger('price');
         });
     }
 

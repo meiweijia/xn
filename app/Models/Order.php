@@ -34,7 +34,7 @@ class Order extends Model
         $prefix = date('YmdHis');
         for ($i = 0; $i < 10; $i++) {
             // 随机生成 6 位的数字
-            $no = $prefix.str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+            $no = $prefix . generate_code(6);
             // 判断是否已经存在
             if (!static::query()->where('no', $no)->exists()) {
                 return $no;
@@ -44,5 +44,20 @@ class Order extends Model
         \Log::warning(sprintf('find order no failed'));
 
         return false;
+    }
+
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function getTotalAmountAttribute($value)
+    {
+        return $value / 100;
+    }
+
+    public function setTotalAmountAttribute($value)
+    {
+        $this->attributes['total_amount'] = $value * 100;
     }
 }

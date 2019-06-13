@@ -23,3 +23,16 @@ Route::name('api.user.')->prefix('user')->group(function () {
     Route::post('login', 'UserController@login')->name('login');
     Route::post('verifyCode', 'UserController@verifyCode')->name('verifyCode');
 });
+
+Route::name('api.user.')->prefix('user')->middleware('auth:api')->group(function () {
+    Route::get('/', 'UserController@index')->name('index');
+    Route::get('/orders', 'UserController@orders')->name('orders');
+    Route::get('/rent', 'UserController@rent')->name('rent');
+});
+
+Route::name('api.index.')->prefix('index')->group(function () {
+    Route::get('/', 'IndexController@index')->name('index');
+
+    Route::get('/houses', 'IndexController@houses')->name('houses');
+});
+

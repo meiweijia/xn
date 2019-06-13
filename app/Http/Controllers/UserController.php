@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VerifyCodeRequest;
+use App\Models\Order;
+use App\Models\RentLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -33,7 +35,6 @@ class UserController extends ApiController
         ]);
 
         return $this->success($user, '注册成功！');
-
     }
 
     /**
@@ -50,7 +51,7 @@ class UserController extends ApiController
         if (Auth::attempt($credentials)) {
             // 身份验证通过...
             $user = User::query()->find(Auth::id());
-            $user->update(['api_token'=>Str::random(80)]);
+            $user->update(['api_token' => Str::random(80)]);
             return $this->success($user, '登录成功！');
         }
 
@@ -73,7 +74,6 @@ class UserController extends ApiController
                         'code' => $code
                     ],
                 ]);
-
             } catch (\Overtrue\EasySms\Exceptions\NoGatewayAvailableException $exception) {
                 $message = $exception->getException(config('easysms')['default']['gateways'][0])->getMessage();
                 return $this->error([], $message ?? '短信发送异常');
@@ -82,10 +82,91 @@ class UserController extends ApiController
 
         $expiredAt = now()->addMinutes(10);
         // 缓存验证码 10分钟过期。
-        \Cache::put($request->tel, ['code' => $code], $expiredAt);
+        Cache::put($request->tel, ['code' => $code], $expiredAt);
 
         return $this->success([
             'expired_at' => $expiredAt->toDateTimeString(),
         ]);
+    }
+
+    /**
+     * 我的首页-游客会返回各种订单的个数
+     *
+     * @return array
+     */
+    public function index()
+    {
+        if (Auth::user()->hasRole('guest')) {
+            $pending = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_PENDING)->count();
+            $processing = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_PROCESSING)->count();
+            $success = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_SUCCESS)->count();
+            $failed = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_FAILED)->count();
+            return [
+                'pending' => $pending,
+                'processing' => $processing,
+                'success' => $success,
+                'failed' => $failed,
+            ];
+        }
+        return [];
+    }
+
+    /**
+     * 我的首页 订单
+     *
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function orders(Request $request)
+    {
+        $type = $request->input('type');//1待支付 2进行中 3已完成 4已取消
+        $orders = Order::query()
+            ->with('items')
+            ->when($type, function ($query, $type) {
+                switch ($type) {
+                    case 1:
+                        $status = Order::PAY_STATUS_PENDING;
+                        break;
+                    case 2:
+                        $status = Order::PAY_STATUS_PROCESSING;
+                        break;
+                    case 3:
+                        $status = Order::PAY_STATUS_SUCCESS;
+                        break;
+                    case 4:
+                        $status = Order::PAY_STATUS_FAILED;
+                        break;
+                    default:
+                        $status = null;
+                }
+                if ($status)
+                    $query->where('status', $status);
+            })
+            ->paginate(10);
+        return $this->success($orders);
+    }
+
+    /**
+     * 我的房租
+     */
+    public function rent()
+    {
+        return $rent = Auth::user()->house()
+            ->with(['rentLog' => function ($query) {
+                $query->orderByDesc('created_at');
+            }])
+            ->get();
+    }
+
+    /**
+     * 上传房源
+     *
+     * @param Request $request
+     */
+    public function uploadHouse(Request $request)
+    {
+
+
     }
 }
