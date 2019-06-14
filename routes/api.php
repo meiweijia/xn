@@ -33,6 +33,7 @@ Route::name('api.user.')->prefix('user')->middleware('auth:api')->group(function
 
 Route::resource('categories', 'CategoryController')->only(['index', 'show'])->names('api.categories');
 Route::resource('regions', 'RegionController')->only(['index', 'show'])->names('api.regions');
+Route::resource('layouts', 'LayoutController')->only(['index', 'show'])->names('api.layouts');
 Route::resource('houses', 'HouseController')->only(['index', 'show'])->names('api.houses');
 
 Route::name('api.index.')->prefix('index')->group(function () {
