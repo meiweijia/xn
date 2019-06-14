@@ -92,8 +92,15 @@
                     <a href="https://nova.laravel.com">Nova</a>
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a onclick="a()">asdf</a>
                 </div>
             </div>
         </div>
     </body>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    function a() {
+        $.post('api/user/login', {'key1':1, 'key2':2});
+    }
+</script>
 </html>

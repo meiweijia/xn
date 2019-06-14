@@ -13,10 +13,10 @@ class AddRecommendToHousesTable extends Migration
      */
     public function up()
     {
-        Schema::table('houses', function (Blueprint $table) {
+        Schema::table('layouts', function (Blueprint $table) {
             $table->boolean('recommend')
                 ->default(0)
-                ->after('peoples')
+                ->after('description')
                 ->comment('首页推荐 1是 0否');
         });
     }
@@ -28,7 +28,7 @@ class AddRecommendToHousesTable extends Migration
      */
     public function down()
     {
-        Schema::table('houses', function (Blueprint $table) {
+        Schema::table('layouts', function (Blueprint $table) {
             $table->dropColumn('recommend');
         });
     }

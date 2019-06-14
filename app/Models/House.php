@@ -16,7 +16,6 @@ class House extends Model
 
     protected $casts = [
         'status' => 'boolean',
-        'recommend' => 'boolean'
     ];
 
     public function user()

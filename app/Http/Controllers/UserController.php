@@ -33,7 +33,6 @@ class UserController extends ApiController
             'tel' => $request->tel,
             'password' => bcrypt($request->password),
             'name' => '',
-            'email' => '',
         ]);
 
         //注册成功 给予 guest 权限
@@ -182,6 +181,7 @@ class UserController extends ApiController
             'image',//封面图
             'carousel',//轮播图
             'description',//描述
+            'recommend',//推荐
         ]));
         return $this->success($result);
     }

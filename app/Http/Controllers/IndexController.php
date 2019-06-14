@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\House;
+use App\Models\Layout;
 use Illuminate\Http\Request;
 
 class IndexController extends ApiController
@@ -13,7 +14,7 @@ class IndexController extends ApiController
         $result['banner'] = [];
         $result['category'] = Category::query()
             ->get();
-        $result['apartment'] = House::query()
+        $result['apartment'] = Layout::query()
             ->where('recommend', 1)
             ->paginate(10);
         return $this->success($result);

@@ -8,6 +8,18 @@ class Layout extends Model
 {
     protected $casts = [
         'carousel' => 'array',
+        'recommend' => 'boolean',
+    ];
+
+    protected $fillable = [
+        'category_id',
+        'property',
+        'name',
+        'rent',
+        'image',
+        'carousel',
+        'description',
+        'recommend',
     ];
 
     public function category()
