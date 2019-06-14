@@ -28,7 +28,7 @@ class CreateHousesTable extends Migration
             $table->json('carousel')->nullable()->default(null)->comment('图片');
             $table->text('description')->comment('描述');
             $table->unsignedTinyInteger('peoples')->default(0)->comment('入住人数');
-            $table->boolean('status')->comment('能否出租 1是 0否');
+            $table->boolean('status')->default(true)->comment('能否出租 1是 0否');
             $table->timestamps();
         });
     }

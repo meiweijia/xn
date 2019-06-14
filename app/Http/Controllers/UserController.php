@@ -34,6 +34,7 @@ class UserController extends ApiController
             'email' => '',
         ]);
 
+        //注册成功 给予 guest 权限
         return $this->success($user, '注册成功！');
     }
 
@@ -96,19 +97,20 @@ class UserController extends ApiController
      */
     public function index()
     {
+        $result = [];
         if (Auth::user()->hasRole('guest')) {
             $pending = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_PENDING)->count();
             $processing = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_PROCESSING)->count();
             $success = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_SUCCESS)->count();
             $failed = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_FAILED)->count();
-            return [
+            $result = [
                 'pending' => $pending,
                 'processing' => $processing,
                 'success' => $success,
                 'failed' => $failed,
             ];
         }
-        return [];
+        return $this->success($result);
     }
 
     /**
@@ -152,21 +154,33 @@ class UserController extends ApiController
      */
     public function rent()
     {
-        return $rent = Auth::user()->house()
+        $rent = Auth::user()->house()
             ->with(['rentLog' => function ($query) {
                 $query->orderByDesc('created_at');
             }])
-            ->get();
+            ->first();
+        return $this->success($rent);
     }
 
     /**
      * 上传房源
      *
      * @param Request $request
+     *
+     * @return array
      */
     public function uploadHouse(Request $request)
     {
-
-
+        $result = User::query()->create($request->only([
+            'number',//房间号
+            'category_id',//公寓
+            'property_id',//物业
+            'household',//户型
+            'rent',//租金
+            'image',//封面图
+            'carousel',//轮播图
+            'description',//描述
+        ]));
+        return $this->success($result);
     }
 }
