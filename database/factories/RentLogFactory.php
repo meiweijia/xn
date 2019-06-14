@@ -7,13 +7,12 @@ use Faker\Generator as Faker;
 
 $factory->define(RentLog::class, function (Faker $faker) {
     //随机取一个物业
-    $property = \App\Models\Property::query()->inRandomOrder()->first();
+    //$property = \App\Models\Property::query()->inRandomOrder()->first();
     //随机取一个房间
     $house = \App\Models\House::query()->inRandomOrder()->first();
 
     return [
-        'property_id' => $property->id,
-        'property_name' => $property->name,
+        'property' => $faker->name,
         'house_id' => $house->id,
         'house_number' => $house->number,
         'house_rent' => $house->rent,

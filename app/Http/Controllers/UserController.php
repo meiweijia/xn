@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VerifyCodeRequest;
+use App\Models\House;
+use App\Models\Layout;
 use App\Models\Order;
 use App\Models\RentLog;
 use Illuminate\Http\Request;
@@ -110,6 +112,7 @@ class UserController extends ApiController
                 'failed' => $failed,
             ];
         }
+
         return $this->success($result);
     }
 
@@ -163,18 +166,17 @@ class UserController extends ApiController
     }
 
     /**
-     * 上传房源
+     * 公寓上传-本质就是上传户型
      *
      * @param Request $request
      *
      * @return array
      */
-    public function uploadHouse(Request $request)
+    public function uploadLayout(Request $request)
     {
-        $result = User::query()->create($request->only([
-            'number',//房间号
+        $result = Layout::query()->create($request->only([
             'category_id',//公寓
-            'property_id',//物业
+            'property',//物业
             'household',//户型
             'rent',//租金
             'image',//封面图

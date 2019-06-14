@@ -8,11 +8,7 @@ class House extends Model
 {
     protected $fillable = [
         'number',
-        'household',
         'rent',
-        'image',
-        'carousel',
-        'description',
         'peoples',
         'recommend',
         'status',
@@ -20,19 +16,8 @@ class House extends Model
 
     protected $casts = [
         'status' => 'boolean',
-        'carousel' => 'array',
         'recommend' => 'boolean'
     ];
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function property()
-    {
-        return $this->belongsTo(Property::class);
-    }
 
     public function user()
     {

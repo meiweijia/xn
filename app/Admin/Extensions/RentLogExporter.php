@@ -10,7 +10,7 @@ class RentLogExporter extends ExcelExporter implements WithStrictNullComparison
     protected $fileName = '水电费结算.xlsx';
 
     protected $columns = [
-        'property_name' => '物业',
+        'property' => '物业',
         'house_number' => '房号',
         'house_rent' => '房费',
         'last_electric_number' => '上月电表(度)',

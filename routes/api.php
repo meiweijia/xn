@@ -28,12 +28,15 @@ Route::name('api.user.')->prefix('user')->middleware('auth:api')->group(function
     Route::get('/', 'UserController@index')->name('index');
     Route::get('/orders', 'UserController@orders')->name('orders');
     Route::get('/rent', 'UserController@rent')->name('rent');
-    Route::post('/uploadHouse', 'UserController@uploadHouse')->name('uploadHouse');
+    Route::post('/uploadLayout', 'UserController@uploadLayout')->name('uploadLayout');
 });
+
+Route::resource('categories', 'CategoryController')->only(['index', 'show'])->names('api.categories');
+Route::resource('regions', 'RegionController')->only(['index', 'show'])->names('api.regions');
+Route::resource('houses', 'HouseController')->only(['index', 'show'])->names('api.houses');
 
 Route::name('api.index.')->prefix('index')->group(function () {
     Route::get('/', 'IndexController@index')->name('index');
-
     Route::get('/houses', 'IndexController@houses')->name('houses');
 });
 

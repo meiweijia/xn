@@ -16,17 +16,11 @@ class CreateHousesTable extends Migration
         Schema::create('houses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('number')->default(0)->comment('编号');
-            $table->unsignedBigInteger('category_id')->comment('楼栋ID');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->unsignedBigInteger('property_id')->default(0)->comment('物业');
-            $table->foreign('property_id')->references('id')->on('properties');
+            $table->unsignedBigInteger('layout_id')->comment('户型ID');
+            $table->foreign('layout_id')->references('id')->on('layouts')->onDelete('cascade');
             $table->unsignedBigInteger('user_id')->nullable()->default(null)->comment('用户ID');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('household')->nullable()->comment('户型');
-            $table->unsignedInteger('rent')->default(0)->comment('租金');
-            $table->string('image')->nullable()->default(null)->comment('封面图');
-            $table->json('carousel')->nullable()->default(null)->comment('图片');
-            $table->text('description')->comment('描述');
+            $table->unsignedInteger('rent')->nullable()->default(null)->comment('租金 默认继承户型的租金，也可以设置自己的租金');
             $table->unsignedTinyInteger('peoples')->default(0)->comment('入住人数');
             $table->boolean('status')->default(true)->comment('能否出租 1是 0否');
             $table->timestamps();
