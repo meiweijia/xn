@@ -25,6 +25,7 @@ class CreateLayoutsTable extends Migration
             $table->string('image')->nullable()->default(null)->comment('封面图');
             $table->json('carousel')->nullable()->default(null)->comment('图片');
             $table->text('description')->comment('描述');
+            $table->text('server_detail')->nullable()->default(null)->comment('服务详情');
             $table->timestamps();
         });
     }

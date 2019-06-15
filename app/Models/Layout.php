@@ -20,6 +20,7 @@ class Layout extends Model
         'carousel',
         'description',
         'recommend',
+        'server_detail'
     ];
 
     public function category()

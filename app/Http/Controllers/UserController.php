@@ -173,22 +173,23 @@ class UserController extends ApiController
      */
     public function uploadLayout(Request $request)
     {
-        $image = url('storage') . '/' . $request->file('image')->store('images/upload', 'public');
-        $request['image'] = $image;
-        $carousel = [];
-        foreach ($request->file('carousel') as $file) {
-            $carousel[] = url('storage') . '/' . $file->store('images/upload', 'public');
-        }
-        $request['carousel'] = $carousel;
+        //$image = url('storage') . '/' . $request->file('image')->store('images/upload', 'public');
+        //$request['image'] = $image;
+        //$carousel = [];
+        //foreach ($request->file('carousel') as $file) {
+        //    $carousel[] = url('storage') . '/' . $file->store('images/upload', 'public');
+        //}
+        //$request['carousel'] = $carousel;
         $result = Layout::query()->create($request->only([
             'category_id',//公寓
             'property',//物业
-            'household',//户型
+            'name',//户型
             'rent',//租金
             'image',//封面图
             'carousel',//轮播图
             'description',//描述
             'recommend',//推荐
+            'server_detail',//服务详情
         ]));
         return $this->success($result);
     }

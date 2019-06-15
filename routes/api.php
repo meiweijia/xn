@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::name('api.user.')->prefix('user')->group(function () {
     Route::post('register', 'UserController@register')->name('register');
     Route::post('login', 'UserController@login')->name('login');
@@ -41,3 +37,6 @@ Route::name('api.index.')->prefix('index')->group(function () {
     Route::get('/houses', 'IndexController@houses')->name('houses');
 });
 
+Route::name('api.common.')->prefix('common')->group(function () {
+    Route::post('/upload', 'CommonController@upload')->name('upload');
+});
