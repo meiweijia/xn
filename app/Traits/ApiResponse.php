@@ -15,7 +15,7 @@ trait ApiResponse
     /**
      * @return mixed
      */
-    private function getStatusCode()
+    public function getStatusCode()
     {
         return $this->statusCode;
     }
@@ -25,7 +25,7 @@ trait ApiResponse
      *
      * @return $this
      */
-    private function setStatusCode($statusCode)
+    public function setStatusCode($statusCode)
     {
 
         $this->statusCode = $statusCode;
@@ -44,13 +44,12 @@ trait ApiResponse
     }
 
     /**
-     * @param $status
      * @param array $data
      * @param null $code
      *
      * @return mixed
      */
-    private function status($status, array $data, $code = null)
+    private function status(array $data, $code = null)
     {
 
         if ($code) {
@@ -61,27 +60,14 @@ trait ApiResponse
     }
 
     /**
-     * @param $message
-     * @param int $code
-     * @param bool $status
-     *
-     * @return mixed
-     */
-    private function failed($message, $code = FoundationResponse::HTTP_BAD_REQUEST, $status = false)
-    {
-        return $this->setStatusCode($code)->message($message, null, $status);
-    }
-
-    /**
      * @param string $message
      * @param array $data
-     * @param bool $status
      *
      * @return mixed
      */
-    private function message($message, $data = [], $status = true)
+    private function message($message, $data = [])
     {
-        return $this->status($status, ['message' => $message, 'data' => $data]);
+        return $this->status(['message' => $message, 'data' => $data]);
     }
 
     /**
@@ -91,11 +77,12 @@ trait ApiResponse
      */
     public function internalError($message = "Internal Error!")
     {
-        return $this->failed($message, FoundationResponse::HTTP_INTERNAL_SERVER_ERROR);
+        return $this->setStatusCode(FoundationResponse::HTTP_INTERNAL_SERVER_ERROR)
+            ->message($message);
     }
 
     /**
-     * @param $data
+     * @param array $data
      * @param string $message
      *
      * @return mixed
@@ -114,30 +101,42 @@ trait ApiResponse
      */
     public function success($data, $message = 'success')
     {
-        return $this->message($message, $data);
+        return $this->setStatusCode(FoundationResponse::HTTP_UNAUTHORIZED)
+            ->message($message, $data);
     }
 
     /**
-     * @param $data
+     * @param array $data
      * @param string $message
      *
      * @return mixed
      */
-    public function error($data, $message = 'error')
+    public function error($data = [], $message = 'error')
     {
-        return $this->setStatusCode(FoundationResponse::HTTP_BAD_REQUEST)->message($message, $data, false);
+        return $this->setStatusCode(FoundationResponse::HTTP_UNAUTHORIZED)
+            ->message($message, $data);
     }
 
     /**
      * @param string $message
-     * @param int $code
-     * @param bool $status
      *
      * @return mixed
      */
-    public function unAuth($message = 'Unauthorized', $code = FoundationResponse::HTTP_UNAUTHORIZED, $status = false)
+    public function unAuth($message = 'Unauthorized')
     {
-        return $this->setStatusCode($code)->message($message, null, $status);
+        return $this->setStatusCode(FoundationResponse::HTTP_UNAUTHORIZED)
+            ->message($message);
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return mixed
+     */
+    public function forbidden($message = 'Forbidden')
+    {
+        return $this->setStatusCode(FoundationResponse::HTTP_FORBIDDEN)
+            ->message($message);
     }
 
     /**
@@ -147,6 +146,19 @@ trait ApiResponse
      */
     public function notFond($message = 'Not Fond!')
     {
-        return $this->failed($message, Foundationresponse::HTTP_NOT_FOUND);
+        return $this->setStatusCode(Foundationresponse::HTTP_NOT_FOUND)
+            ->message($message);
+    }
+
+    /**
+     * @param array $data
+     * @param string $message
+     *
+     * @return mixed
+     */
+    public function unProcessable($data = [], $message = 'Unprocessable Entity')
+    {
+        return $this->setStatusCode(Foundationresponse::HTTP_UNPROCESSABLE_ENTITY)
+            ->message($message, $data);
     }
 }

@@ -12,16 +12,16 @@ class InvalidRequestException extends Exception
 
     private $data;
 
-    public function __construct($data = null, string $message = "", int $code = 400)
+    public function __construct($data = null, string $message = "")
     {
-        parent::__construct($message, $code);
+        parent::__construct($message, 0);
         $this->data = $data;
     }
 
     public function render(Request $request)
     {
         if ($request->expectsJson()) {
-            return $this->error($this->data, $this->message);
+            return $this->unProcessable($this->data);
         }
 
         return view('pages.error', ['msg' => $this->message]);

@@ -16,13 +16,14 @@ class ApiController extends Controller
      *
      * @param Request $request
      * @param array $param
+     *
      * @throws InvalidRequestException
      */
     public function checkPar(Request $request, array $param)
     {
         $validator = Validator::make($request->all(), $param);
         if ($validator->fails()) {
-            throw new InvalidRequestException($validator->errors(), '缺少参数');
+            throw new InvalidRequestException($validator->errors());
         }
     }
 }
