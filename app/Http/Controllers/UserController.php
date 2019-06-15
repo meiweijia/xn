@@ -173,6 +173,13 @@ class UserController extends ApiController
      */
     public function uploadLayout(Request $request)
     {
+        $image = url('storage') . '/' . $request->file('image')->store('images/upload', 'public');
+        $request['image'] = $image;
+        $carousel = [];
+        foreach ($request->file('carousel') as $file) {
+            $carousel[] = url('storage') . '/' . $file->store('images/upload', 'public');
+        }
+        $request['carousel'] = $carousel;
         $result = Layout::query()->create($request->only([
             'category_id',//公寓
             'property',//物业
