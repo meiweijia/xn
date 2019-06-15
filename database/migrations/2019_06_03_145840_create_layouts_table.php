@@ -17,7 +17,7 @@ class CreateLayoutsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id')->comment('楼栋ID');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->string('property')->default('')->comment('物业');
+            $table->string('property')->nullable()->default(null)->comment('物业');
             //$table->unsignedBigInteger('property_id')->comment('物业');
             //$table->foreign('property_id')->references('id')->on('properties');
             $table->string('name')->default('')->comment('户型');

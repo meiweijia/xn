@@ -10,7 +10,7 @@ class LayoutController extends ApiController
     public function index(Request $request)
     {
         $this->checkPar($request, [
-            'category_id'
+            'category_id' => 'required'
         ]);
         $category_id = $request->input('category_id');
         $result = Layout::query()
