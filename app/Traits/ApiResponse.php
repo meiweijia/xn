@@ -101,7 +101,7 @@ trait ApiResponse
      */
     public function success($data, $message = 'success')
     {
-        return $this->setStatusCode(FoundationResponse::HTTP_UNAUTHORIZED)
+        return $this->setStatusCode($this->statusCode)
             ->message($message, $data);
     }
 
@@ -113,7 +113,7 @@ trait ApiResponse
      */
     public function error($data = [], $message = 'error')
     {
-        return $this->setStatusCode(FoundationResponse::HTTP_UNAUTHORIZED)
+        return $this->setStatusCode(FoundationResponse::HTTP_BAD_REQUEST)
             ->message($message, $data);
     }
 
