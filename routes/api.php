@@ -40,3 +40,20 @@ Route::name('api.index.')->prefix('index')->group(function () {
 Route::name('api.common.')->prefix('common')->group(function () {
     Route::post('/upload', 'CommonController@upload')->name('upload');
 });
+
+Route::resource('house_ins', 'HouseInController')->only(['store',])->names('api.house_ins');
+Route::resource('house_outs', 'HouseOutController')->only(['store',])->names('api.house_ins');
+Route::resource('visits', 'VisitController')->only(['store',])->names('api.visits');
+Route::resource('job_logs', 'JobLogController')->only(['store',])->names('api.job_logs');
+Route::resource('advises', 'AdviseController')->only(['store',])->names('api.advises');
+Route::resource('renews', 'RenewController')->only(['store',])->names('api.renews');
+Route::resource('reget_cards', 'RegetCardController')->only(['store',])->names('api.reget_cards');
+Route::resource('posts', 'PostController')->only(['store',])->names('api.posts');
+Route::resource('repairs', 'RepairController')->only(['store',])->names('api.repairs');
+Route::resource('public_areas', 'PublicAreaController')->only(['store',])->names('api.public_areas');
+Route::resource('borrows', 'BorrowController')->only(['store',])->names('api.borrows');
+Route::resource('supports', 'SupportController')->only(['store',])->names('api.supports');
+Route::resource('out_cleans', 'OutCleanController')->only(['store',])->names('api.out_cleans');
+Route::resource('public_area_cleans', 'PublicAreaCleanController')->only(['store',])->names('api.public_area_cleans');
+Route::resource('articles', 'ArticleController')->only(['store',])->names('api.articles');
+Route::resource('tasks', 'TaskController')->only(['store',])->names('api.tasks');
