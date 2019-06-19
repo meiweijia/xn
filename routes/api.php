@@ -53,7 +53,7 @@ Route::resource('repairs', 'RepairController')->only(['store',])->names('api.rep
 Route::resource('public_areas', 'PublicAreaController')->only(['store',])->names('api.public_areas');
 Route::resource('borrows', 'BorrowController')->only(['store',])->names('api.borrows');
 Route::resource('supports', 'SupportController')->only(['store',])->names('api.supports');
-Route::resource('out_cleans', 'OutCleanController')->only(['store',])->names('api.out_cleans');
+Route::resource('house_out_cleans', 'HouseOutCleanController')->only(['store',])->names('api.house_out_cleans');
 Route::resource('public_area_cleans', 'PublicAreaCleanController')->only(['store',])->names('api.public_area_cleans');
 Route::resource('articles', 'ArticleController')->only(['store',])->names('api.articles');
 Route::resource('tasks', 'TaskController')->only(['store',])->names('api.tasks');
