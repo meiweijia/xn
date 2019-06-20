@@ -19,6 +19,7 @@ class LayoutController extends Controller
      * Index interface.
      *
      * @param Content $content
+     *
      * @return Content
      */
     public function index(Content $content)
@@ -33,6 +34,7 @@ class LayoutController extends Controller
      *
      * @param mixed $id
      * @param Content $content
+     *
      * @return Content
      */
     public function show($id, Content $content)
@@ -47,6 +49,7 @@ class LayoutController extends Controller
      *
      * @param mixed $id
      * @param Content $content
+     *
      * @return Content
      */
     public function edit($id, Content $content)
@@ -60,6 +63,7 @@ class LayoutController extends Controller
      * Create interface.
      *
      * @param Content $content
+     *
      * @return Content
      */
     public function create(Content $content)
@@ -93,6 +97,7 @@ class LayoutController extends Controller
      * Make a show builder.
      *
      * @param mixed $id
+     *
      * @return Show
      */
     protected function detail($id)
@@ -100,7 +105,7 @@ class LayoutController extends Controller
         $show = new Show(Layout::findOrFail($id));
 
         $show->id('Id');
-        $show->category_id('楼栋')->as(function ($value){
+        $show->category_id('楼栋')->as(function ($value) {
             return Category::getName($value);
         });
         $show->property('物业');
@@ -124,7 +129,7 @@ class LayoutController extends Controller
     {
         $form = new Form(new Layout);
 
-        $form->select('category_id', '楼栋')->options(Category::query()->pluck('name','id'));
+        $form->select('category_id', '楼栋')->options(Category::query()->pluck('name', 'id'));
         $form->text('property', '物业');
         $form->text('name', '户型');
         $form->decimal('rent', '租金');
@@ -141,7 +146,10 @@ class LayoutController extends Controller
             $form->text('number', '房号')->rules('required');
             $form->decimal('rent', '租金(默认继承自户型)');
             $form->number('peoples', '入住人数')->rules('required');
-            $form->number('status', '状态')->rules('required|numeric');
+            $form->select('status', '可入住')->options([
+                '否',
+                '是',
+            ])->rules('required|numeric');
         });
 
         return $form;

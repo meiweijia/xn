@@ -18,6 +18,7 @@ class RegionController extends ApiController
             ->with(['categories' => function ($query) use ($type) {
                 $query->where('type', $type);
             }])
+            //TODO 此处可优化 参考 https://learnku.com/laravel/t/23879
             ->whereHas('categories', function ($query) use ($type) {
                 $query->where('type', $type);
             })
