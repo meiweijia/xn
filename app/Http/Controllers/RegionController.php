@@ -18,6 +18,9 @@ class RegionController extends ApiController
             ->with(['categories' => function ($query) use ($type) {
                 $query->where('type', $type);
             }])
+            ->whereHas('categories', function ($query) use ($type) {
+                $query->where('type', $type);
+            })
             ->get();
         return $this->success($result);
     }
