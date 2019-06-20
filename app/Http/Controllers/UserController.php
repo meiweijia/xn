@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
 use App\Facades\EasySms;
+use Spatie\Permission\Models\Role;
 
 class UserController extends ApiController
 {
@@ -36,6 +37,7 @@ class UserController extends ApiController
         ]);
 
         //注册成功 给予 guest 权限
+        $user->assignRole('guest');
         return $this->success($user, '注册成功！');
     }
 
@@ -98,13 +100,14 @@ class UserController extends ApiController
      */
     public function index()
     {
-        $result = [];
+        $result['data'] = [];
+        $result['role'] = Auth::user()->getRoleNames();
         if (Auth::user()->hasRole('guest')) {
             $pending = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_PENDING)->count();
             $processing = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_PROCESSING)->count();
             $success = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_SUCCESS)->count();
             $failed = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_FAILED)->count();
-            $result = [
+            $result['data'] = [
                 'pending' => $pending,
                 'processing' => $processing,
                 'success' => $success,
