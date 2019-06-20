@@ -16,9 +16,7 @@ class CategoryController extends ApiController
 
         $type = $request->input('type');
         $result = Category::query()
-            ->select('categories.*')
-            ->join('regions', 'categories.region_id', '=', 'regions.id')
-            ->where('regions.type', $type)
+            ->where('type', $type)
             ->get();
         return $this->success($result);
     }

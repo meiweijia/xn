@@ -16,7 +16,6 @@ class CreateRegionsTable extends Migration
         Schema::create('regions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->default('');
-            $table->unsignedTinyInteger('type')->default(1)->comment('类型 1写字楼 2公寓 3商铺');
             $table->timestamps();
         });
     }
