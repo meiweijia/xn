@@ -23,6 +23,17 @@ class Layout extends Model
         'server_detail'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            // 如果模型的 no 字段为空
+            if (is_string($model->carousel)) {
+                $model->carousel = explode(',', $model->carousel);
+            }
+        });
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -32,6 +43,11 @@ class Layout extends Model
     //{
     //    return $this->belongsTo(Property::class);
     //}
+
+    public function houses()
+    {
+        return $this->hasMany(House::class);
+    }
 
     public function getRentAttribute($value)
     {

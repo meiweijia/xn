@@ -137,6 +137,13 @@ class LayoutController extends Controller
             ->sortable();
         $form->textarea('description', '描述');
 
+        $form->hasMany('houses', '房间列表', function (Form\NestedForm $form) {
+            $form->text('number', '房号')->rules('required');
+            $form->decimal('rent', '租金(默认继承自户型)');
+            $form->number('peoples', '入住人数')->rules('required');
+            $form->number('status', '状态')->rules('required|numeric');
+        });
+
         return $form;
     }
 }
