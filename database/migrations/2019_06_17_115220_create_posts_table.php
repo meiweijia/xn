@@ -17,6 +17,9 @@ class CreatePostsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->string('name')->nullable()->comment('姓名');
             $table->string('post')->nullable()->comment('岗位申请');
             $table->string('leave_date')->nullable()->comment('休假日期');
             $table->string('detail')->nullable()->comment('详细说明');

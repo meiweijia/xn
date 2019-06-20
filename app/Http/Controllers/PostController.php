@@ -10,6 +10,8 @@ class PostController extends ApiController
     public function store(Request $request)
     {
         $result = Post::query()->create($request->only([
+            'category_id',//楼栋
+            'name',//姓名
             'post',//岗位申请
             'leave_date',//'休假日期
             'detail',//'详细说明
