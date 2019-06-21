@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class IndexController extends ApiController
 {
-    public function index()
+    public function index(Request $request)
     {
         $result['banner'] = [];
         $result['category'] = Category::query()

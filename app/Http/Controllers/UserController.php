@@ -96,9 +96,11 @@ class UserController extends ApiController
     /**
      * 我的首页-游客会返回各种订单的个数
      *
+     * @param Request $request
+     *
      * @return array
      */
-    public function index()
+    public function index(Request $request)
     {
         $result['data'] = [];
         $result['role'] = Auth::user()->getRoleNames();
