@@ -19,6 +19,6 @@ class RegetCardController extends ApiController
             'number',//'补卡数量
             'images',//'身份证
         ]));
-        return $result;
+        return $this->success($result);
     }
 }
