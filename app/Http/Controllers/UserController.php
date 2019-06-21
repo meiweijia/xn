@@ -208,7 +208,7 @@ class UserController extends ApiController
     public function getUsers(Request $request)
     {
         $this->checkPar($request, [
-            'type' => 'require',
+            'type' => 'required',
         ]);
         $result = User::query()->where('type', $request->input('type'))
             ->get();
