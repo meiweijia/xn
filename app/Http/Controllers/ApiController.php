@@ -11,6 +11,14 @@ class ApiController extends Controller
 {
     use ApiResponse;
 
+    public function index()
+    {
+        $action = \Route::current()->getActionName();
+        list($class, $method) = explode('@', $action);
+        $class = '\\App\Models\\' . str_replace('Controller', '', substr(strrchr($class, '\\'), 1));
+        return $this->success(call_user_func([$class, 'paginate'], 20));
+    }
+
     /**
      * 参数检查
      *

@@ -67,6 +67,14 @@ class User extends Authenticatable
         return $this->hasOne(House::class);
     }
 
+    public function posts(){
+        return $this->hasOne(Post::class);
+    }
+
+    public function regetCards(){
+        return $this->hasOne(RegetCard::class);
+    }
+
     public function visits()
     {
         return $this->hasMany(Visit::class);

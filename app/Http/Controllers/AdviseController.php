@@ -12,11 +12,6 @@ class AdviseController extends ApiController
         $this->middleware('auth:api')->only('store');
     }
 
-    public function index()
-    {
-        return Advise::query()->paginate(20);
-    }
-
     public function store(Request $request)
     {
         $result = $request->user()->advises()->create($request->only([

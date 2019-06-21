@@ -9,7 +9,7 @@ class RegetCardController extends ApiController
 {
     public function store(Request $request)
     {
-        $result = RegetCard::query()->create($request->only([
+        $result = $request->user()->regetCards()->create($request->only([
             'house_id',
             'number',//'补卡数量
             'images',//'身份证

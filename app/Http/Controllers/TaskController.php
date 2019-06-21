@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class TaskController extends ApiController
 {
-    public function index()
-    {
-        return Task::query()->paginate(20);
-    }
-
     public function store(Request $request)
     {
         $result = Task::query()->create($request->only([

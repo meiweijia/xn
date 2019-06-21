@@ -9,7 +9,7 @@ class PostController extends ApiController
 {
     public function store(Request $request)
     {
-        $result = Post::query()->create($request->only([
+        $result = $request->user()->posts()->create($request->only([
             'category_id',//楼栋
             'name',//姓名
             'post',//岗位申请
