@@ -1,6 +1,7 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
+
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
@@ -24,5 +25,6 @@ $factory->define(\App\Models\User::class, function (Faker $faker) {
         'api_token' => Str::random(80),
         'open_id' => Str::random(20),
         'avatar' => asset('storage/images/avatar/default.png'),
+        'type' => $faker->numberBetween(1, 2),
     ];
 });

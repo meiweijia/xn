@@ -18,6 +18,7 @@ Route::name('api.user.')->prefix('user')->group(function () {
     Route::post('register', 'UserController@register')->name('register');
     Route::post('login', 'UserController@login')->name('login');
     Route::post('verifyCode', 'UserController@verifyCode')->name('verifyCode');
+    Route::get('staff', 'UserController@getUsers')->name('staff');
 });
 
 Route::name('api.user.')->prefix('user')->middleware('auth:api')->group(function () {
@@ -45,7 +46,7 @@ Route::resource('house_ins', 'HouseInController')->only(['store',])->names('api.
 Route::resource('house_outs', 'HouseOutController')->only(['store',])->names('api.house_ins');
 Route::resource('visits', 'VisitController')->only(['store',])->names('api.visits');
 Route::resource('job_logs', 'JobLogController')->only(['store',])->names('api.job_logs');
-Route::resource('advises', 'AdviseController')->only(['store',])->names('api.advises');
+Route::resource('advises', 'AdviseController')->only(['index', 'store',])->names('api.advises');
 Route::resource('renews', 'RenewController')->only(['store',])->names('api.renews');
 Route::resource('reget_cards', 'RegetCardController')->only(['store',])->names('api.reget_cards');
 Route::resource('posts', 'PostController')->only(['store',])->names('api.posts');

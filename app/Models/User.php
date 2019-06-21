@@ -57,8 +57,18 @@ class User extends Authenticatable
         });
     }
 
+    public function advises()
+    {
+        return $this->hasMany(Advise::class);
+    }
+
     public function house()
     {
         return $this->hasOne(House::class);
+    }
+
+    public function visits()
+    {
+        return $this->hasMany(Visit::class);
     }
 }

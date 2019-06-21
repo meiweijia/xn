@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('api_token', 80)->unique()->nullable()->default(null);
             $table->string('open_id')->nullable()->unique()->default(null);
             $table->string('avatar')->nullable()->default(null);
+            $table->unsignedTinyInteger('type')->default(1)->comment('用户类型 1住户 2员工');
             $table->rememberToken();
             $table->timestamps();
         });

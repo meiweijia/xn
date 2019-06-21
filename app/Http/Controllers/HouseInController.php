@@ -10,7 +10,6 @@ class HouseInController extends ApiController
     public function store(Request $request)
     {
         $result = HouseIn::query()->create($request->only([
-            'id',
             'house_id',
             'rent',//租金
             'deposit',//押金

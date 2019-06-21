@@ -196,4 +196,20 @@ class UserController extends ApiController
         ]));
         return $this->success($result);
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     * @throws \App\Exceptions\InvalidRequestException
+     */
+    public function getUsers(Request $request)
+    {
+        $this->checkPar($request, [
+            'type' => 'require',
+        ]);
+        $result = User::query()->where('type', $request->input('type'))
+            ->get();
+        return $this->success($result);
+    }
 }
