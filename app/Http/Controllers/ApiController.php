@@ -11,7 +11,7 @@ class ApiController extends Controller
 {
     use ApiResponse;
 
-    public function index()
+    public function index(Request $request)
     {
         $action = \Route::current()->getActionName();
         list($class, $method) = explode('@', $action);
