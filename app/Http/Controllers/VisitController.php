@@ -9,7 +9,7 @@ class VisitController extends ApiController
 {
     public function store(Request $request)
     {
-        $result = $request->user()->visits->create($request->only([
+        $result = $request->user()->visits()->create($request->only([
             'numbers',//访客数量
             'name',//姓名
             'phone',//电话
