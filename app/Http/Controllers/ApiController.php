@@ -13,9 +13,9 @@ class ApiController extends Controller
 
     public function index(Request $request)
     {
-        $action = \Route::current()->getActionName();
+        $action = $request->route()->getActionName();
         list($class, $method) = explode('@', $action);
-        $class = '\\App\Models\\' . str_replace('Controller', '', substr(strrchr($class, '\\'), 1));
+        $class = '\\App\Models\\' . str_replace('Controller', '', class_basename($class));
         return $this->success(call_user_func([$class, 'paginate'], 20));
     }
 
