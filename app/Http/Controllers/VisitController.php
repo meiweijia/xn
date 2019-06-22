@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class VisitController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('store');
+    }
+    
     public function store(Request $request)
     {
         $result = $request->user()->visits()->create($request->only([
