@@ -9,7 +9,7 @@ class BorrowController extends ApiController
 {
     public function store(Request $request)
     {
-        $result = Borrow::query()->create($request->only([
+        $result = $request->user()->create($request->only([
             'goods',//物品
             'purpose',//'用途'
             'date',//归还日期'
