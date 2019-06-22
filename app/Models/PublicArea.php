@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class PublicArea extends Model
 {
+    protected $casts = [
+        'images' => 'array',
+    ];
+
     protected $fillable = [
         'category_id',
         'type',//'报修事宜
