@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class HouseIn extends Model
 {
+    protected $casts = [
+        'id_card_images' => 'array',
+    ];
+
     protected $fillable = [
         'house_id',
         'rent',//租金

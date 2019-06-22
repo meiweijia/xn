@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class JobLog extends Model
 {
+    protected $casts = [
+        'images' => 'array',
+    ];
+
     protected $fillable = [
         'type',//工作日志人 1日班 2夜班
         'patrol',//巡查发现

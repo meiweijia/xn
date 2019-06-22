@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class HouseOut extends Model
 {
+    protected $casts = [
+        'images' => 'array',
+    ];
+
     protected $fillable = [
         'house_id',
         'bathroom',//卫浴区 1正常 2有损 3有污渍 4严重损坏

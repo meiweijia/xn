@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Borrow extends Model
 {
+    protected $casts = [
+        'images' => 'array',
+    ];
+
     protected $fillable = [
         'goods',//物品
         'purpose',//'用途'

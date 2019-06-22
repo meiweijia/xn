@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class RegetCard extends Model
 {
+    protected $casts = [
+        'images' => 'array',
+    ];
+
     protected $fillable = [
         'house_id',
         'number',//'补卡数量
