@@ -21,7 +21,7 @@ class CreateRepairsTable extends Migration
             $table->foreign('house_id')->references('id')->on('houses');
             $table->string('name')->nullable()->comment('签约人姓名');
             $table->date('repair_date')->nullable()->comment('维修日期');
-            $table->unsignedTinyInteger('duty')->default(1)->comment('事故责任 1自然损坏 2人为损坏 3无法判定');
+            $table->string('duty')->nullable()->comment('事故责任 自然损坏 人为损坏 无法判定');
             $table->string('detail')->nullable()->comment('详细说明');
             $table->json('images')->comment('图片');
             $table->timestamps();

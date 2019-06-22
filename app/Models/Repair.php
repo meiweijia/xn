@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Repair extends Model
 {
+    protected $casts = [
+        'images' => 'array',
+    ];
+
     protected $fillable = [
         'house_id',
         'name',//签约人姓名
