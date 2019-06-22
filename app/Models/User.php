@@ -75,6 +75,10 @@ class User extends Authenticatable
         return $this->hasOne(RegetCard::class);
     }
 
+    public function repairs(){
+        return $this->hasOne(Repair::class);
+    }
+
     public function visits()
     {
         return $this->hasMany(Visit::class);
