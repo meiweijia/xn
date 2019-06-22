@@ -7,9 +7,14 @@ use Illuminate\Http\Request;
 
 class SupportController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('store');
+    }
+
     public function store(Request $request)
     {
-        $result = Support::query()->create($request->only([
+        $result = $request->user()->supports()->create($request->only([
             'category_id',
             'type',//投诉事项
             'detail',//详细说明

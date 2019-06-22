@@ -64,7 +64,7 @@ class User extends Authenticatable
 
     public function borrows()
     {
-        return $this->hasOne(Borrow::class);
+        return $this->hasMany(Borrow::class);
     }
 
     public function house()
@@ -74,17 +74,22 @@ class User extends Authenticatable
 
     public function posts()
     {
-        return $this->hasOne(Post::class);
+        return $this->hasMany(Post::class);
     }
 
     public function regetCards()
     {
-        return $this->hasOne(RegetCard::class);
+        return $this->hasMany(RegetCard::class);
     }
 
     public function repairs()
     {
-        return $this->hasOne(Repair::class);
+        return $this->hasMany(Repair::class);
+    }
+
+    public function supports()
+    {
+        return $this->hasMany(Support::class);
     }
 
     public function visits()
