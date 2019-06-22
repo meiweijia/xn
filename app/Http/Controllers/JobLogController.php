@@ -7,9 +7,14 @@ use Illuminate\Http\Request;
 
 class JobLogController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('store');
+    }
+
     public function store(Request $request)
     {
-        $result = JobLog::query()->create($request->only([
+        $result = $request->user()->job_logs()->create($request->only([
             'type',//工作日志人 1日班 2夜班
             'patrol',//巡查发现
             'images',//图片

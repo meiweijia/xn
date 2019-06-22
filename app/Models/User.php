@@ -72,6 +72,11 @@ class User extends Authenticatable
         return $this->hasOne(House::class);
     }
 
+    public function job_logs()
+    {
+        return $this->hasMany(JobLog::class);
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class);
