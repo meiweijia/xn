@@ -26,6 +26,8 @@ Route::name('api.user.')->prefix('user')->middleware('auth:api')->group(function
     Route::get('/orders', 'UserController@orders')->name('orders');
     Route::get('/rent', 'UserController@rent')->name('rent');
     Route::post('/uploadLayout', 'UserController@uploadLayout')->name('uploadLayout');
+
+    Route::get('categories','UserController@categories')->name('categories');
 });
 
 Route::resource('categories', 'CategoryController')->only(['index', 'show'])->names('api.categories');

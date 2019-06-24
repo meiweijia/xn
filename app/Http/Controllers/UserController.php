@@ -214,4 +214,18 @@ class UserController extends ApiController
             ->get();
         return $this->success($result);
     }
+
+    /**
+     * 用户管理的楼
+     *
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function categories(Request $request)
+    {
+        $user = $request->user();
+        $result = $user->categories()->get();
+        return $this->success($result);
+    }
 }

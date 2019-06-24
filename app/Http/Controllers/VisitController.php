@@ -11,7 +11,7 @@ class VisitController extends ApiController
     {
         $this->middleware('auth:api')->only('store');
     }
-    
+
     public function store(Request $request)
     {
         $result = $request->user()->visits()->create($request->only([

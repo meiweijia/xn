@@ -15,7 +15,8 @@ class Category extends Model
         self::CATEGORY_TYPE_3 => '旺街商铺',
     ];
 
-    public static function getName($id){
+    public static function getName($id)
+    {
         return Category::query()->find($id)->value('name');
     }
 
@@ -27,5 +28,10 @@ class Category extends Model
     public function houses()
     {
         return $this->hasMany(House::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(Category::class);
     }
 }

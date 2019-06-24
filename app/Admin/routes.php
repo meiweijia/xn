@@ -17,5 +17,8 @@ Route::group([
     $router->resource('categories', 'CategoryController')->names('admin.categories');
     $router->resource('layouts', 'LayoutController')->names('admin.layouts');
 
+    $router->resource('users', 'UserController')->names('admin.users');
+    $router->resource('roles', 'RoleController')->names('admin.roles');
+    $router->resource('permissions', 'PermissionController')->names('admin.permissions');
 
 });
