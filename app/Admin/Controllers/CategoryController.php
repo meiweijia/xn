@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Models\Region;
+use App\Models\User;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -130,10 +131,13 @@ class CategoryController extends Controller
     {
         $form = new Form(new Category);
 
-        $form->select('region_id', '地区')->options(Region::query()->pluck('name','id')->toArray());
+        $form->select('region_id', '地区')->options(Region::query()->pluck('name', 'id')->toArray());
         $form->text('name', '名称');
         $form->text('address', '地址');
         $form->select('type', '类型')->options(Category::$typeMap);
+        $form->select('users', '网格员')->options(
+            User::role('网格员')->pluck('name', 'id')//每栋楼可以设置网格员
+        );
 
         return $form;
     }
