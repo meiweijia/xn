@@ -25,13 +25,13 @@ class Category extends Model
         return $this->belongsTo(Region::class);
     }
 
-    public function houses()
+    public function layouts()
     {
-        return $this->hasMany(House::class);
+        return $this->hasMany(Layout::class);
     }
 
     public function users()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(User::class);
     }
 }
