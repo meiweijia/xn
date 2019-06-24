@@ -135,7 +135,7 @@ class CategoryController extends Controller
         $form->text('name', '名称');
         $form->text('address', '地址');
         $form->select('type', '类型')->options(Category::$typeMap);
-        $form->select('users', '网格员')->options(
+        $form->multipleSelect('users', '网格员')->options(
             User::role('网格员')->pluck('name', 'id')//每栋楼可以设置网格员
         );
 
