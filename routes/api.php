@@ -34,7 +34,7 @@ Route::resource('categories', 'CategoryController')->only(['index', 'show'])->na
 Route::resource('regions', 'RegionController')->only(['index', 'show'])->names('api.regions');
 Route::resource('layouts', 'LayoutController')->only(['index', 'show'])->names('api.layouts');
 Route::resource('houses', 'HouseController')->only(['index', 'show'])->names('api.houses');
-Route::get('houses/{id}/tenants', 'HouseController@tenants')->name('api.houses.tenants');
+Route::get('houses/{house}/tenants', 'HouseController@tenants')->name('api.houses.tenants');
 
 Route::name('api.index.')->prefix('index')->group(function () {
     Route::get('/', 'IndexController@index')->name('index');
