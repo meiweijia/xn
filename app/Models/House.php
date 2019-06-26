@@ -33,6 +33,11 @@ class House extends Model
         return $this->hasMany(RentLog::class);
     }
 
+    public function tenants()
+    {
+        return $this->hasMany(Tenant::class);
+    }
+
     public function getRentAttribute($value)
     {
         return $value / 100;
