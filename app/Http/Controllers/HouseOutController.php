@@ -7,19 +7,23 @@ use Illuminate\Http\Request;
 
 class HouseOutController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('store');
+    }
+
     public function store(Request $request)
     {
-        $result = HouseOut::query()->create($request->only([
-            'house_id',
+        $house = $request->user()->house();
+        $data = $request->only([
             'bathroom',//卫浴区 1正常 2有损 3有污渍 4严重损坏
             'parlour',//客厅区 1正常 2有损 3有污渍 4严重损坏
             'kitchen',//厨房区 1正常 2有损 3有污渍 4严重损坏
-            'bedroom1',//卧室区1 1正常 2有损 3有污渍 4严重损坏
-            'bedroom2',//卧室区2 1正常 2有损 3有污渍 4严重损坏
-            'bedroom3',//卧室区3 1正常 2有损 3有污渍 4严重损坏
-            'bedroom4',//卧室区4 1正常 2有损 3有污渍 4严重损坏
+            'bedroom',//卧室区 1正常 2有损 3有污渍 4严重损坏
             'images',//照片
-        ]));
+        ]);
+        $data['house_id'] = $house->id;
+        $result = $request->user()->houseOuts()->create($data);
         return $this->success($result);
     }
 }
