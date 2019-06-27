@@ -14,7 +14,7 @@ class HouseOutController extends ApiController
 
     public function store(Request $request)
     {
-        $house = $request->user()->house();
+        $house = $request->user()->house()->first();
         $data = $request->only([
             'bathroom',//卫浴区 1正常 2有损 3有污渍 4严重损坏
             'parlour',//客厅区 1正常 2有损 3有污渍 4严重损坏
