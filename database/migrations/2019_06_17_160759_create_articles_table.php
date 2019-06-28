@@ -18,6 +18,7 @@ class CreateArticlesTable extends Migration
             $table->string('title')->comment('标题');
             $table->text('content')->comment('内容');
             $table->string('images')->nullable()->comment('图片');
+            $table->boolean('approve')->default(false)->comment('审批');
             $table->timestamps();
         });
     }

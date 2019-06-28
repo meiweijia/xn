@@ -28,9 +28,10 @@ class CreateHouseInsTable extends Migration
             $table->json('id_card_images')->comment('身份证图片');
             $table->string('phone')->nullable()->comment('签约人电话');
             $table->boolean('status')->default(false)->comment('验收 1已验收 0未验收');
-            $table->decimal('electric_number',8,1)->default(0.0)->comment('电表度数');
-            $table->decimal('cold_water_number',8,0)->default(0)->comment('冷水表度数');
-            $table->decimal('hot_water_number',8,0)->default(0)->comment('热水表度数');
+            $table->decimal('electric_number', 8, 1)->default(0.0)->comment('电表度数');
+            $table->decimal('cold_water_number', 8, 0)->default(0)->comment('冷水表度数');
+            $table->decimal('hot_water_number', 8, 0)->default(0)->comment('热水表度数');
+            $table->boolean('approve')->default(false)->comment('审批');
             $table->timestamps();
         });
     }

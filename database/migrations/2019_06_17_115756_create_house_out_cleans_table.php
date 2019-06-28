@@ -20,6 +20,7 @@ class CreateHouseOutCleansTable extends Migration
             $table->string('name')->nullable()->comment('联系人');
             $table->string('status')->nullable()->comment('卫生状况');
             $table->string('detail')->nullable()->comment('详细说明');
+            $table->boolean('approve')->default(false)->comment('审批');
             $table->timestamps();
         });
     }

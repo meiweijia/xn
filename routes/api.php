@@ -61,3 +61,20 @@ Route::resource('house_out_cleans', 'HouseOutCleanController')->only(['index', '
 Route::resource('public_area_cleans', 'PublicAreaCleanController')->only(['index', 'store',])->names('api.public_area_cleans');
 Route::resource('articles', 'ArticleController')->only(['index', 'store',])->names('api.articles');
 Route::resource('tasks', 'TaskController')->only(['index', 'store',])->names('api.tasks');
+
+//审批
+Route::post('house_ins/{id}/approve', 'HouseInController@approve')->name('api.house_ins.approve');
+Route::post('house_outs/{id}/approve', 'HouseOutController@approve')->name('api.house_ins.approve');
+Route::post('visits/{id}/approve', 'VisitController@approve')->name('api.visits.approve');
+Route::post('advises/{id}/approve', 'AdviseController@approve')->name('api.advises.approve');
+Route::post('renews/{id}/approve', 'RenewController@approve')->name('api.renews.approve');
+Route::post('reget_cards/{id}/approve', 'RegetCardController@approve')->name('api.reget_cards.approve');
+Route::post('posts/{id}/approve', 'PostController@approve')->name('api.posts.approve');
+Route::post('repairs/{id}/approve', 'RepairController@approve')->name('api.repairs.approve');
+Route::post('public_areas/{id}/approve', 'PublicAreaController@approve')->name('api.public_areas.approve');
+Route::post('borrows/{id}/approve', 'BorrowController@approve')->name('api.borrows.approve');
+Route::post('supports/{id}/approve', 'SupportController@approve')->name('api.supports.approve');
+Route::post('house_out_cleans/{id}/approve', 'HouseOutCleanController@approve')->name('api.house_out_cleans.approve');
+Route::post('public_area_cleans/{id}/approve', 'PublicAreaCleanController@approve')->name('api.public_area_cleans.approve');
+Route::post('articles/{id}/approve', 'ArticleController@approve')->name('api.articles.approve');
+Route::post('tasks/{id}/approve', 'TaskController@approve')->name('api.tasks.approve');

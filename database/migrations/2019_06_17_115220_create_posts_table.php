@@ -22,6 +22,7 @@ class CreatePostsTable extends Migration
             $table->string('post')->nullable()->comment('岗位申请');
             $table->string('leave_date')->nullable()->comment('休假日期');
             $table->string('detail')->nullable()->comment('详细说明');
+            $table->boolean('approve')->default(false)->comment('审批');
             $table->timestamps();
         });
     }

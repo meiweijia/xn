@@ -24,6 +24,7 @@ class CreatePublicAreasTable extends Migration
             $table->string('duty')->nullable()->comment('事故责任');
             $table->string('detail')->nullable()->comment('详细说明');
             $table->json('images')->comment('图片');
+            $table->boolean('approve')->default(false)->comment('审批');
             $table->timestamps();
         });
     }

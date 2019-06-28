@@ -21,6 +21,7 @@ class CreateBorrowsTable extends Migration
             $table->string('purpose')->nullable()->comment('用途');
             $table->string('date')->nullable()->comment('归还日期');
             $table->json('images')->comment('物品图片');
+            $table->boolean('approve')->default(false)->comment('审批');
             $table->timestamps();
         });
     }

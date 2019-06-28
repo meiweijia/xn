@@ -13,10 +13,20 @@ class ApiController extends Controller
 
     public function index(Request $request)
     {
-        $action = $request->route()->getActionName();
-        list($class, $method) = explode('@', $action);
-        $class = '\\App\Models\\' . str_replace('Controller', '', class_basename($class));
-        return $this->success(call_user_func([$class, 'paginate'], 20));
+        $class = $this->getClass($request);
+        $model = new $class;
+        return $this->success($model->paginate(20));
+    }
+
+    public function approve(Request $request, $id)
+    {
+        $approve = $request->input('approve');
+        $class = $this->getClass($request);
+        $model = new $class;
+        $result = $model->where('id', $id)->update([
+            'approve' => $approve
+        ]);
+        return $this->success($result);
     }
 
     /**
@@ -33,5 +43,13 @@ class ApiController extends Controller
         if ($validator->fails()) {
             throw new InvalidRequestException($validator->errors());
         }
+    }
+
+    private function getClass($request)
+    {
+        $action = $request->route()->getActionName();
+        list($class, $method) = explode('@', $action);
+        $class = '\\App\Models\\' . str_replace('Controller', '', class_basename($class));
+        return $class;
     }
 }

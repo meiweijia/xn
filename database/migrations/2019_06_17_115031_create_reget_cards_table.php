@@ -21,6 +21,7 @@ class CreateRegetCardsTable extends Migration
             $table->foreign('house_id')->references('id')->on('houses');
             $table->unsignedTinyInteger('number')->default(0)->comment('补卡数量');
             $table->json('images')->comment('身份证');
+            $table->boolean('approve')->default(false)->comment('审批');
             $table->timestamps();
         });
     }

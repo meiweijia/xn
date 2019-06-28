@@ -27,6 +27,7 @@ class CreateHouseOutsTable extends Migration
             $table->unsignedTinyInteger('kitchen')->nullable()->comment('厨房区 1正常 2有损 3有污渍 4严重损坏');
             $table->json('bedroom')->nullable()->comment('卧室区 1正常 2有损 3有污渍 4严重损坏 数组格式');
             $table->json('images')->nullable()->comment('照片');
+            $table->boolean('approve')->default(false)->comment('审批');
             $table->timestamps();
         });
     }

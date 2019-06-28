@@ -22,6 +22,7 @@ class CreateVisitsTable extends Migration
             $table->string('phone')->comment('电话');
             $table->unsignedTinyInteger('intention')->comment('意向程度 1高 2中 3低');
             $table->text('remark')->nullable()->comment('其他原因');
+            $table->boolean('approve')->default(false)->comment('审批');
             $table->timestamps();
         });
     }
