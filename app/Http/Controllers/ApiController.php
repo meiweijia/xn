@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\InvalidRequestException;
 use App\Traits\ApiResponse;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,16 +14,14 @@ class ApiController extends Controller
 
     public function index(Request $request)
     {
-        $class = $this->getClass($request);
-        $model = new $class;
+        $model = $this->getInstance($request);
         return $this->success($model->paginate(20));
     }
 
     public function approve(Request $request, $id)
     {
         $approve = $request->input('approve');
-        $class = $this->getClass($request);
-        $model = new $class;
+        $model = $this->getInstance($request);
         $result = $model->where('id', $id)->update([
             'approve' => $approve
         ]);
@@ -45,11 +44,31 @@ class ApiController extends Controller
         }
     }
 
+    /**
+     * 获取控制器对应的 model
+     *
+     * @param $request
+     *
+     * @return string
+     */
     private function getClass($request)
     {
         $action = $request->route()->getActionName();
         list($class, $method) = explode('@', $action);
         $class = '\\App\Models\\' . str_replace('Controller', '', class_basename($class));
         return $class;
+    }
+
+    /**
+     * 获取控制器对应的 model 的实例
+     *
+     * @param $request
+     *
+     * @return Builder
+     */
+    private function getInstance($request)
+    {
+        $class = $this->getClass($request);
+        return new $class();
     }
 }

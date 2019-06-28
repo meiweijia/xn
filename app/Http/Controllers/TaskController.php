@@ -7,10 +7,14 @@ use Illuminate\Http\Request;
 
 class TaskController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('store');
+    }
+
     public function store(Request $request)
     {
-        $result = Task::query()->create($request->only([
-            'user_id',//指派人
+        $result = $request->user()->tasks()->create($request->only([
             'title',//任务
             'detail',//详细说明
             'images',//图片

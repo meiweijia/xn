@@ -72,7 +72,8 @@ class User extends Authenticatable
         return $this->hasOne(House::class);
     }
 
-    public function houseOuts(){
+    public function houseOuts()
+    {
         return $this->hasMany(HouseOut::class);
     }
 
@@ -99,6 +100,11 @@ class User extends Authenticatable
     public function supports()
     {
         return $this->hasMany(Support::class);
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 
     public function visits()
