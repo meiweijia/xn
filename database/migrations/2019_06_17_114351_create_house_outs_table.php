@@ -19,9 +19,9 @@ class CreateHouseOutsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('house_id');
             $table->foreign('house_id')->references('id')->on('houses');
-            $table->date('start_time ')->nullable()->comment('起租日期');
-            $table->date('end_time ')->nullable()->comment('截止日期');
-            $table->date('leave_time ')->nullable()->comment('搬離日期');
+            $table->date('start_time')->nullable()->comment('起租日期');
+            $table->date('end_time')->nullable()->comment('截止日期');
+            $table->date('leave_time')->nullable()->comment('搬離日期');
             $table->unsignedTinyInteger('bathroom')->nullable()->comment('卫浴区 1正常 2有损 3有污渍 4严重损坏');
             $table->unsignedTinyInteger('parlour')->nullable()->comment('客厅区 1正常 2有损 3有污渍 4严重损坏');
             $table->unsignedTinyInteger('kitchen')->nullable()->comment('厨房区 1正常 2有损 3有污渍 4严重损坏');

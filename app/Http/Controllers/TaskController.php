@@ -15,6 +15,7 @@ class TaskController extends ApiController
     public function store(Request $request)
     {
         $result = $request->user()->tasks()->create($request->only([
+            'executor_id',//执行人
             'title',//任务
             'detail',//详细说明
             'images',//图片

@@ -17,6 +17,8 @@ class CreateTasksTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('executor_id');
+            $table->foreign('executor_id')->references('id')->on('users');
             $table->string('title')->comment('任务');
             $table->string('detail')->comment('详细说明');
             $table->string('images')->nullable()->comment('图片');
