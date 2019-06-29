@@ -21,7 +21,7 @@ class ApiController extends Controller
                 $query->where('approve', $approve);
             })
             ->paginate(20);
-        return $this->success();
+        return $this->success($result);
     }
 
     protected function show(Request $request, $id)
