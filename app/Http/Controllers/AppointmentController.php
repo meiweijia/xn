@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,17 @@ class AppointmentController extends ApiController
     public function __construct()
     {
         $this->middleware('auth:api')->only('store');
+    }
+
+    public function index(Request $request)
+    {
+        $result = Appointment::query()
+            ->with([
+                'house',
+                'house.layout',
+            ])
+            ->paginate(20);
+        return $this->success($result);
     }
 
     public function store(Request $request)

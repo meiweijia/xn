@@ -18,6 +18,11 @@ class House extends Model
         'status' => 'boolean',
     ];
 
+    public function layout()
+    {
+        return $this->belongsTo(Layout::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
