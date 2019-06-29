@@ -19,11 +19,6 @@ class HouseController extends ApiController
         return $this->success($result);
     }
 
-    public function show(House $house)
-    {
-        return $this->success($house);
-    }
-
     public function tenants(House $house)
     {
         return $this->success($house->tenants()->get());

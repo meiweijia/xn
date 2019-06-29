@@ -12,19 +12,19 @@ class ApiController extends Controller
 {
     use ApiResponse;
 
-    public function index(Request $request)
+    protected function index(Request $request)
     {
         $model = $this->getInstance($request);
         return $this->success($model->paginate(20));
     }
 
-    public function show(Request $request, $id)
+    protected function show(Request $request, $id)
     {
         $model = $this->getInstance($request);
         return $this->success($model->findOrFail($id));
     }
 
-    public function approve(Request $request, $id)
+    protected function approve(Request $request, $id)
     {
         $approve = $request->input('approve');
         $model = $this->getInstance($request);
@@ -42,7 +42,7 @@ class ApiController extends Controller
      *
      * @throws InvalidRequestException
      */
-    public function checkPar(Request $request, array $param)
+    protected function checkPar(Request $request, array $param)
     {
         $validator = Validator::make($request->all(), $param);
         if ($validator->fails()) {

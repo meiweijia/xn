@@ -19,9 +19,11 @@ class LayoutController extends ApiController
         return $this->success($result);
     }
 
-    public function show(Layout $layout)
+    public function show(Request $request, $id)
     {
-        $layout->category = $layout->category()->first();
+        $layout = Layout::query()
+            ->with('category')
+            ->get();
         return $this->success($layout);
     }
 }

@@ -20,9 +20,4 @@ class CategoryController extends ApiController
             ->get();
         return $this->success($result);
     }
-
-    public function show(Category $category)
-    {
-        return $this->success($category);
-    }
 }

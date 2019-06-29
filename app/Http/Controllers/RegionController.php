@@ -25,9 +25,4 @@ class RegionController extends ApiController
             ->get();
         return $this->success($result);
     }
-
-    public function show(Region $region)
-    {
-        return $this->success($region);
-    }
 }
