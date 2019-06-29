@@ -22,7 +22,7 @@ class CreateTasksTable extends Migration
             $table->string('title')->comment('任务');
             $table->string('detail')->comment('详细说明');
             $table->string('images')->nullable()->comment('图片');
-            $table->boolean('approve')->default(false)->comment('审批');
+            $table->unsignedTinyInteger('approve')->default(0)->comment('审批 0未审核 1通过 2未通过');
             $table->timestamps();
         });
     }

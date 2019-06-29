@@ -31,7 +31,7 @@ class CreateHouseInsTable extends Migration
             $table->decimal('electric_number', 8, 1)->default(0.0)->comment('电表度数');
             $table->decimal('cold_water_number', 8, 0)->default(0)->comment('冷水表度数');
             $table->decimal('hot_water_number', 8, 0)->default(0)->comment('热水表度数');
-            $table->boolean('approve')->default(false)->comment('审批');
+            $table->unsignedTinyInteger('approve')->default(0)->comment('审批 0未审核 1通过 2未通过');
             $table->timestamps();
         });
     }

@@ -24,7 +24,7 @@ class CreateRepairsTable extends Migration
             $table->string('duty')->nullable()->comment('事故责任 自然损坏 人为损坏 无法判定');
             $table->string('detail')->nullable()->comment('详细说明');
             $table->json('images')->comment('图片');
-            $table->boolean('approve')->default(false)->comment('审批');
+            $table->unsignedTinyInteger('approve')->default(0)->comment('审批 0未审核 1通过 2未通过');
             $table->timestamps();
         });
     }

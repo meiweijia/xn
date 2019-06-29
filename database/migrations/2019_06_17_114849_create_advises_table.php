@@ -19,7 +19,7 @@ class CreateAdvisesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('name')->nullable()->comment('投诉对象');
             $table->text('remark')->nullable()->comment('投诉内容');
-            $table->boolean('approve')->default(false)->comment('审批');
+            $table->unsignedTinyInteger('approve')->default(0)->comment('审批 0未审核 1通过 2未通过');
             $table->timestamps();
         });
     }

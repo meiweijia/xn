@@ -37,7 +37,7 @@ class UserController extends ApiController
         ]);
 
         //注册成功 给予 guest 权限
-        $user->assignRole('guest');
+        $user->assignRole('游客');
         return $this->success($user, '注册成功！');
     }
 

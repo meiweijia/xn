@@ -20,7 +20,7 @@ class CreatePublicAreaCleansTable extends Migration
             $table->string('name')->nullable()->comment('联系人');
             $table->string('status')->nullable()->comment('卫生状况');
             $table->string('remark')->nullable()->comment('其他');
-            $table->boolean('approve')->default(false)->comment('审批');
+            $table->unsignedTinyInteger('approve')->default(0)->comment('审批 0未审核 1通过 2未通过');
             $table->timestamps();
         });
     }

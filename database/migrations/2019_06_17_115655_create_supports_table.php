@@ -22,7 +22,7 @@ class CreateSupportsTable extends Migration
             $table->string('type')->nullable()->comment('投诉事项');
             $table->string('detail')->nullable()->comment('详细说明');
             $table->string('name')->nullable()->comment('负责人');
-            $table->boolean('approve')->default(false)->comment('审批');
+            $table->unsignedTinyInteger('approve')->default(0)->comment('审批 0未审核 1通过 2未通过');
             $table->timestamps();
         });
     }
