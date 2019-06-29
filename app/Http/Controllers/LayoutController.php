@@ -21,6 +21,7 @@ class LayoutController extends ApiController
 
     public function show(Layout $layout)
     {
+        $layout->category = $layout->category()->first();
         return $this->success($layout);
     }
 }
