@@ -45,23 +45,23 @@ Route::name('api.common.')->prefix('common')->group(function () {
     Route::post('/upload', 'CommonController@upload')->name('upload');
 });
 
-Route::resource('house_ins', 'HouseInController')->only(['index', 'store',])->names('api.house_ins');
-Route::resource('house_outs', 'HouseOutController')->only(['index', 'store',])->names('api.house_ins');
-Route::resource('visits', 'VisitController')->only(['index', 'store',])->names('api.visits');
-Route::resource('job_logs', 'JobLogController')->only(['index', 'store',])->names('api.job_logs');
-Route::resource('advises', 'AdviseController')->only(['index', 'store',])->names('api.advises');
-Route::resource('renews', 'RenewController')->only(['index', 'store',])->names('api.renews');
-Route::resource('reget_cards', 'RegetCardController')->only(['index', 'store',])->names('api.reget_cards');
-Route::resource('posts', 'PostController')->only(['index', 'store',])->names('api.posts');
-Route::resource('repairs', 'RepairController')->only(['index', 'store',])->names('api.repairs');
-Route::resource('public_areas', 'PublicAreaController')->only(['index', 'store',])->names('api.public_areas');
-Route::resource('borrows', 'BorrowController')->only(['index', 'store',])->names('api.borrows');
-Route::resource('supports', 'SupportController')->only(['index', 'store',])->names('api.supports');
-Route::resource('house_out_cleans', 'HouseOutCleanController')->only(['index', 'store',])->names('api.house_out_cleans');
-Route::resource('public_area_cleans', 'PublicAreaCleanController')->only(['index', 'store',])->names('api.public_area_cleans');
-Route::resource('articles', 'ArticleController')->only(['index', 'store',])->names('api.articles');
-Route::resource('tasks', 'TaskController')->only(['index', 'store',])->names('api.tasks');
-Route::resource('appointments', 'AppointmentController')->only(['index', 'store'])->names('api.appointments');
+Route::resource('house_ins', 'HouseInController')->only(['index', 'store', 'show',])->names('api.house_ins');
+Route::resource('house_outs', 'HouseOutController')->only(['index', 'store', 'show',])->names('api.house_ins');
+Route::resource('visits', 'VisitController')->only(['index', 'store', 'show',])->names('api.visits');
+Route::resource('job_logs', 'JobLogController')->only(['index', 'store', 'show',])->names('api.job_logs');
+Route::resource('advises', 'AdviseController')->only(['index', 'store', 'show',])->names('api.advises');
+Route::resource('renews', 'RenewController')->only(['index', 'store', 'show',])->names('api.renews');
+Route::resource('reget_cards', 'RegetCardController')->only(['index', 'store', 'show',])->names('api.reget_cards');
+Route::resource('posts', 'PostController')->only(['index', 'store', 'show',])->names('api.posts');
+Route::resource('repairs', 'RepairController')->only(['index', 'store', 'show',])->names('api.repairs');
+Route::resource('public_areas', 'PublicAreaController')->only(['index', 'store', 'show',])->names('api.public_areas');
+Route::resource('borrows', 'BorrowController')->only(['index', 'store', 'show',])->names('api.borrows');
+Route::resource('supports', 'SupportController')->only(['index', 'store', 'show',])->names('api.supports');
+Route::resource('house_out_cleans', 'HouseOutCleanController')->only(['index', 'store', 'show',])->names('api.house_out_cleans');
+Route::resource('public_area_cleans', 'PublicAreaCleanController')->only(['index', 'store', 'show',])->names('api.public_area_cleans');
+Route::resource('articles', 'ArticleController')->only(['index', 'store', 'show',])->names('api.articles');
+Route::resource('tasks', 'TaskController')->only(['index', 'store', 'show',])->names('api.tasks');
+Route::resource('appointments', 'AppointmentController')->only(['index', 'store', 'show',])->names('api.appointments');
 
 //审批
 Route::post('house_ins/{id}/approve', 'HouseInController@approve')->name('api.house_ins.approve');
