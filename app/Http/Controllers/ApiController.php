@@ -14,8 +14,14 @@ class ApiController extends Controller
 
     protected function index(Request $request)
     {
+        $approve = $request->input('approve');
         $model = $this->getInstance($request);
-        return $this->success($model->paginate(20));
+        $result = $model
+            ->when($approve, function ($query, $approve) {
+                $query->where('approve', $approve);
+            })
+            ->paginate(20);
+        return $this->success();
     }
 
     protected function show(Request $request, $id)

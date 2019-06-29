@@ -23,7 +23,7 @@ class LayoutController extends ApiController
     {
         $layout = Layout::query()
             ->with('category')
-            ->find($id);
+            ->findOrFail($id);
         return $this->success($layout);
     }
 }

@@ -26,7 +26,7 @@ class Layout extends Model
     protected static function boot()
     {
         parent::boot();
-        static::creating(function ($model) {
+        static::saving(function ($model) {
             // 如果模型的 no 字段为空
             if (is_string($model->carousel)) {
                 $model->carousel = explode(',', $model->carousel);
