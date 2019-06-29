@@ -18,6 +18,12 @@ class ApiController extends Controller
         return $this->success($model->paginate(20));
     }
 
+    public function show(Request $request, $id)
+    {
+        $model = $this->getInstance($request);
+        return $this->success($model->findOrFail($id));
+    }
+
     public function approve(Request $request, $id)
     {
         $approve = $request->input('approve');
