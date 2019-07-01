@@ -117,8 +117,8 @@ class BannerController extends Controller
     {
         $form = new Form(new Banner);
 
-        $form->image('image', 'Image');
-        $form->url('url', 'Url');
+        $form->image('image', '图片')->uniqueName();
+        $form->url('url', '链接');
 
         return $form;
     }
