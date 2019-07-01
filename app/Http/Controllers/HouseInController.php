@@ -14,7 +14,7 @@ class HouseInController extends ApiController
             ->when($approve, function ($query, $approve) {
                 $query->where('approve', $approve);
             })
-            ->with('house')
+            ->with(['house','house.layout'])
             ->paginate(20);
         return $this->success($result);
     }
