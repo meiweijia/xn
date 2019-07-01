@@ -25,4 +25,9 @@ class HouseIn extends Model
         'cold_water_number',//冷水表度数
         'hot_water_number',//热水表度数
     ];
+
+    public function house()
+    {
+        return $this->belongsTo(House::class);
+    }
 }

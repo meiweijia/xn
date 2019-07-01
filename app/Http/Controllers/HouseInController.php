@@ -7,6 +7,18 @@ use Illuminate\Http\Request;
 
 class HouseInController extends ApiController
 {
+    public function index(Request $request)
+    {
+        $approve = $request->input('approve');
+        $result = HouseIn::query()
+            ->when($approve, function ($query, $approve) {
+                $query->where('approve', $approve);
+            })
+            ->with('house')
+            ->paginate(20);
+        return $this->success($result);
+    }
+
     public function store(Request $request)
     {
         $result = HouseIn::query()->create($request->only([
