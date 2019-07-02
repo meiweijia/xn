@@ -19,4 +19,9 @@ class HouseOut extends Model
         'bedroom',//卧室区1 1正常 2有损 3有污渍 4严重损坏
         'images',//照片
     ];
+
+    public function house()
+    {
+        return $this->belongsTo(House::class);
+    }
 }

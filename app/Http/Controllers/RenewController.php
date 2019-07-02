@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class RenewController extends ApiController
 {
+
+    public function index(Request $request)
+    {
+        $this->setWith('house');
+        return parent::index($request);
+    }
+
     public function store(Request $request)
     {
         $result = Renew::query()->create($request->only([

@@ -12,4 +12,9 @@ class HouseOutClean extends Model
         'status',//卫生状况
         'detail',//详细说明
     ];
+
+    public function house()
+    {
+        return $this->belongsTo(House::class);
+    }
 }

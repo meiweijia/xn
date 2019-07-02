@@ -12,11 +12,25 @@ class ApiController extends Controller
 {
     use ApiResponse;
 
+    /**
+     * @var Builder
+     */
+    protected $model;
+
+    /**
+     * @var string | array
+     *
+     */
+    protected $with = null;
+
     protected function index(Request $request)
     {
         $approve = $request->input('approve');
-        $model = $this->getInstance($request);
-        $result = $model
+        $this->model = $this->getInstance($request);
+        $result = $this->model
+            ->when($this->with, function ($query) {
+                $query->with($this->with);
+            })
             ->when($approve, function ($query, $approve) {
                 $query->where('approve', $approve);
             })
@@ -38,6 +52,14 @@ class ApiController extends Controller
             'approve' => $approve
         ]);
         return $this->success($result);
+    }
+
+    /**
+     * @param mixed $with
+     */
+    protected function setWith($with = null): void
+    {
+        $this->with = $with;
     }
 
     /**

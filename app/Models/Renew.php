@@ -12,4 +12,9 @@ class Renew extends Model
         'contract_new',//新合同第一页
         'recovery',//收回
     ];
+
+    public function house()
+    {
+        return $this->belongsTo(House::class);
+    }
 }

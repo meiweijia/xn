@@ -7,16 +7,11 @@ use Illuminate\Http\Request;
 
 class HouseInController extends ApiController
 {
+
     public function index(Request $request)
     {
-        $approve = $request->input('approve');
-        $result = HouseIn::query()
-            ->when($approve, function ($query, $approve) {
-                $query->where('approve', $approve);
-            })
-            ->with(['house','house.layout'])
-            ->paginate(20);
-        return $this->success($result);
+        $this->setWith(['house', 'house.layout']);
+        return parent::index($request);
     }
 
     public function store(Request $request)

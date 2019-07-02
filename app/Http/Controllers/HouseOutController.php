@@ -12,6 +12,12 @@ class HouseOutController extends ApiController
         $this->middleware('auth:api')->only('store');
     }
 
+    public function index(Request $request)
+    {
+        $this->setWith('house');
+        return parent::index($request);
+    }
+
     public function store(Request $request)
     {
         $house = $request->user()->house()->first();

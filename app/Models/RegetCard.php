@@ -15,4 +15,9 @@ class RegetCard extends Model
         'number',//'补卡数量
         'images',//'身份证
     ];
+
+    public function house()
+    {
+        return $this->belongsTo(House::class);
+    }
 }
