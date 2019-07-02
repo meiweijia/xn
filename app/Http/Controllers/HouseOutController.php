@@ -14,7 +14,7 @@ class HouseOutController extends ApiController
 
     public function index(Request $request)
     {
-        $this->setWith(['house','house.layout.category']);
+        $this->setWith(['house', 'house.layout.category']);
         return parent::index($request);
     }
 
@@ -30,6 +30,18 @@ class HouseOutController extends ApiController
         ]);
         $data['house_id'] = $house->id;
         $result = $request->user()->houseOuts()->create($data);
+        return $this->success($result);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $result = HouseOut::query()
+            ->where('id', $id)
+            ->update($request->only([
+                'start_time',
+                'end_time',
+                'leave_time',
+            ]));
         return $this->success($result);
     }
 }
