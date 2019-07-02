@@ -228,4 +228,12 @@ class UserController extends ApiController
         $result = $user->categories()->get();
         return $this->success($result);
     }
+
+
+    public function tasks(Request $request, $id)
+    {
+        $user = User::query()->find($id);
+        $result = $user->tasks()->get();
+        return $this->success($result);
+    }
 }

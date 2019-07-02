@@ -19,6 +19,7 @@ Route::name('api.user.')->prefix('user')->group(function () {
     Route::post('login', 'UserController@login')->name('login');
     Route::post('verifyCode', 'UserController@verifyCode')->name('verifyCode');
     Route::get('staff', 'UserController@getUsers')->name('staff');
+    Route::get('{id}/tasks','UserController@tasks')->name('tasks');
 });
 
 Route::name('api.user.')->prefix('user')->middleware('auth:api')->group(function () {
@@ -46,7 +47,7 @@ Route::name('api.common.')->prefix('common')->group(function () {
 });
 
 Route::resource('house_ins', 'HouseInController')->only(['index', 'store', 'show',])->names('api.house_ins');
-Route::resource('house_outs', 'HouseOutController')->only(['index', 'store', 'show','update',])->names('api.house_outs');
+Route::resource('house_outs', 'HouseOutController')->only(['index', 'store', 'show', 'update',])->names('api.house_outs');
 Route::resource('visits', 'VisitController')->only(['index', 'store', 'show',])->names('api.visits');
 Route::resource('job_logs', 'JobLogController')->only(['index', 'store', 'show',])->names('api.job_logs');
 Route::resource('advises', 'AdviseController')->only(['index', 'store', 'show',])->names('api.advises');
