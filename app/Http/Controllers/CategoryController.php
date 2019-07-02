@@ -10,13 +10,11 @@ class CategoryController extends ApiController
 {
     public function index(Request $request)
     {
-        $this->checkPar($request, [
-            'type' => 'required',
-        ]);
-
         $type = $request->input('type');
         $result = Category::query()
-            ->where('type', $type)
+            ->when($type, function ($query) use ($type) {
+                $query->where('type', $type);
+            })
             ->get();
         return $this->success($result);
     }
