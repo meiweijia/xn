@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class PublicAreaCleanController extends ApiController
 {
+    public function index(Request $request)
+    {
+        $this->setWith('house.layout.category');
+        return parent::index($request);
+    }
+
     public function store(Request $request)
     {
         $result = PublicAreaClean::query()->create($request->only([
