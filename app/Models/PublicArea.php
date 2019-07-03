@@ -20,4 +20,9 @@ class PublicArea extends Model
         'detail',//详细说明
         'images',//图片
     ];
+
+    public function house()
+    {
+        return $this->belongsTo(House::class);
+    }
 }

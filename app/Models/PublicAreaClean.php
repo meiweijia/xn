@@ -12,4 +12,9 @@ class PublicAreaClean extends Model
         'status',//卫生状况
         'remark',//其他'
     ];
+
+    public function house()
+    {
+        return $this->belongsTo(House::class);
+    }
 }
