@@ -16,7 +16,7 @@ class AppointmentController extends ApiController
 
     public function index(Request $request)
     {
-        $this->setWith(['house', 'house.layout']);
+        $this->setWith('house.layout.category');
         return parent::index($request);
     }
 
