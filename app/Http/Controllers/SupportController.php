@@ -12,6 +12,12 @@ class SupportController extends ApiController
         $this->middleware('auth:api')->only('store');
     }
 
+    public function index(Request $request)
+    {
+        $this->setWith('category');
+        return parent::index($request);
+    }
+
     public function store(Request $request)
     {
         $result = $request->user()->supports()->create($request->only([
