@@ -9,7 +9,7 @@ class PublicAreaController extends ApiController
 {
     public function index(Request $request)
     {
-        $this->setWith('house.layout.category');
+        $this->setWith('category');
         return parent::index($request);
     }
 

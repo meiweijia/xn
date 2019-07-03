@@ -13,8 +13,8 @@ class PublicAreaClean extends Model
         'remark',//其他'
     ];
 
-    public function house()
+    public function category()
     {
-        return $this->belongsTo(House::class);
+        return $this->belongsTo(Category::class);
     }
 }
