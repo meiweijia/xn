@@ -12,4 +12,9 @@ class Support extends Model
         'detail',//详细说明
         'name',//负责人
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
