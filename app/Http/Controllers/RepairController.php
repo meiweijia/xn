@@ -15,7 +15,7 @@ class RepairController extends ApiController
 
     public function index(Request $request)
     {
-        $this->setWith('house');
+        $this->setWith('house.layout.category');
         return parent::index($request);
     }
 
