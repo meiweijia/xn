@@ -31,7 +31,11 @@ class OrderController extends ApiController
         //微信那边下单
         $notify = config('wechat.payment.default.notify_url');
         $open_id = $request->user()->open_id;
-        $config = $wechatService->order($order->no, $order->total_amount * 100, '鑫南支付中心-房租支付', $open_id, $notify);
+        $total_fee = $order->total_amount * 100;
+        if (!app()->environment('production')) {//开发环境
+            $total_fee = 101;
+        }
+        $config = $wechatService->order($order->no, $total_fee, '鑫南支付中心-房租支付', $open_id, $notify);
         if (!$config) {//微信下单失败  删除原来订单
             $order->delete();
         }
