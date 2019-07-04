@@ -34,7 +34,7 @@ class OrderService
                 ]);
                 $item->house()->associate($house);
                 $item->save();
-                $totalAmount += $house->price;
+                $totalAmount += $house->rent;
             }
 
             // 更新订单总金额
