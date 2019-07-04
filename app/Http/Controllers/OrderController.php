@@ -16,7 +16,7 @@ class OrderController extends ApiController
     {
         $orders = $request->user()
             ->orders()
-            ->with('item.house.layout')
+            ->with('items.house.layout')
             ->paginate(20);
         return $this->success($orders);
     }
