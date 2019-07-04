@@ -8,6 +8,10 @@ class OrderItem extends Model
 {
     public $timestamps = false;
 
+    protected $fillable = [
+        'price',
+    ];
+
     public function order()
     {
         return $this->belongsTo(Order::class);
