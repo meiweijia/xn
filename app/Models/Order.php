@@ -71,6 +71,11 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function items()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function getTotalAmountAttribute($value)
     {
         return $value / 100;
