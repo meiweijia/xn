@@ -66,9 +66,9 @@ class Order extends Model
         return false;
     }
 
-    public function orders()
+    public function user()
     {
-        return $this->hasMany(Order::class);
+        return $this->belongsTo(User::class);
     }
 
     public function getTotalAmountAttribute($value)

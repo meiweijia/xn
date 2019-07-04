@@ -10,9 +10,11 @@ class WechatService
     /**
      * 下单
      *
-     * @param $trade_no
-     * @param $total_fee
-     * @param $body
+     * @param string $trade_no
+     * @param int $total_fee
+     * @param string $body
+     * @param string $openid
+     * @param string $notify_url
      *
      * @return mixed
      */
