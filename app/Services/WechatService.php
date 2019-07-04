@@ -29,6 +29,7 @@ class WechatService
             'openid' => $openid,
             'notify_url' => $notify_url
         ];
+        Log::info('下单参数', $par);
 
         $result = $app->order->unify($par);
 
