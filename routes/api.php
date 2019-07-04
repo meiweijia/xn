@@ -47,7 +47,7 @@ Route::name('api.common.')->prefix('common')->group(function () {
 });
 
 //支付回调
-Route::any('pay/wechat_pay_notify', 'PayController')->name('pay.wechat_pay_notify');
+Route::any('/pay/wechat_pay_notify', 'PayController@wechatPayNotify')->name('pay.wechat_pay_notify');
 
 //申请
 Route::resource('house_ins', 'HouseInController')->only(['index', 'store', 'show',])->names('api.house_ins');
