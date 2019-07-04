@@ -46,6 +46,10 @@ Route::name('api.common.')->prefix('common')->group(function () {
     Route::post('/upload', 'CommonController@upload')->name('upload');
 });
 
+//支付回调
+Route::any('pay/wechat_pay_notify', 'PayController')->name('pay.wechat_pay_notify');
+
+//申请
 Route::resource('house_ins', 'HouseInController')->only(['index', 'store', 'show',])->names('api.house_ins');
 Route::resource('house_outs', 'HouseOutController')->only(['index', 'store', 'show', 'update',])->names('api.house_outs');
 Route::resource('visits', 'VisitController')->only(['index', 'store', 'show',])->names('api.visits');
