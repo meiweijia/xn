@@ -165,7 +165,7 @@ class UserController extends ApiController
             ->with(['rentLog' => function ($query) {
                 $query->whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'));
             }])
-            ->get();
+            ->first();
         return $this->success($rent);
     }
 
