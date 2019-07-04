@@ -25,6 +25,8 @@ class OrderService
             // 遍历用户提交的 SKU
             foreach ($items as $v) {
                 $house = House::query()->find($v);
+                $house->status = false;//房子设为不可出租状态
+                $house->save();
                 if ($house->rent === 0) {//如果房租为0，则取户型的租金
                     $house->rent = $house->layout()->value('rent');
                 }
