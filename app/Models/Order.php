@@ -73,7 +73,7 @@ class Order extends Model
 
     public function items()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(OrderItem::class);
     }
 
     public function getTotalAmountAttribute($value)
