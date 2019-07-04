@@ -11,8 +11,3 @@
 |
 */
 
-Route::get('/', function () {
-    $a = 'a';
-    dd(explode(',',$a));
-    return view('welcome');
-});
