@@ -19,12 +19,12 @@ Route::name('api.user.')->prefix('user')->group(function () {
     Route::post('login', 'UserController@login')->name('login');
     Route::post('verifyCode', 'UserController@verifyCode')->name('verifyCode');
     Route::get('staff', 'UserController@getUsers')->name('staff');
-    Route::get('{id}/tasks','UserController@tasks')->name('tasks');
+    Route::get('{id}/tasks', 'UserController@tasks')->name('tasks');
 });
 
 Route::name('api.user.')->prefix('user')->middleware('auth:api')->group(function () {
     Route::get('/', 'UserController@index')->name('index');
-    Route::get('/orders', 'UserController@orders')->name('orders');
+    Route::resource('/orders', 'OrderController')->only(['store', 'index'])->names('orders');
     Route::get('/rent', 'UserController@rent')->name('rent');
     Route::post('/uploadLayout', 'UserController@uploadLayout')->name('uploadLayout');
 

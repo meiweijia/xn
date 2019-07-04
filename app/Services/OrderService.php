@@ -1,19 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mei
- * Date: 6/29/19
- * Time: 11:47 AM
- */
 
 namespace App\Services;
 
-
 use App\Models\House;
+use App\Models\Order;
+use App\Models\User;
 
 class OrderService
 {
-    public function store(User $user, $items)
+    public function store(User $user, array $items)
     {
         // 开启一个数据库事务
         $order = \DB::transaction(function () use ($user, $items) {
@@ -29,15 +24,14 @@ class OrderService
             $totalAmount = 0;
             // 遍历用户提交的 SKU
             foreach ($items as $data) {
-                $house = House::query()->find($data['sku_id']);
+                $house = House::query()->find($data['house_id']);
                 // 创建一个 OrderItem 并直接与当前订单关联
                 $item = $order->items()->make([
-                    'amount' => $data['amount'],
-                    'price' => $sku->price,
+                    'price' => $house->rent,
                 ]);
-                $item->product()->associate($sku->product_id);
+                $item->house()->associate($house);
                 $item->save();
-                $totalAmount += $sku->price;
+                $totalAmount += $house->price;
             }
 
             // 更新订单总金额
@@ -47,7 +41,7 @@ class OrderService
         });
 
         // 指定时间过后如果还没有支付，就关闭订单。
-        dispatch(new CloseOrder($order, config('app.order_ttl')));
+        //dispatch(new CloseOrder($order, config('app.order_ttl')));
 
         return $order;
     }

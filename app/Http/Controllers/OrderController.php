@@ -4,16 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Services\OrderService;
+use App\Services\WechatService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends ApiController
 {
-    public function __construct()
+    public function index(Request $request)
     {
-        $this->middleware('auth:api')->only('store');
+        return $this->success($request->user()->orders()->paginate(20));
     }
 
-    public function store(Request $request, OrderService $service)
+    public function store(Request $request, OrderService $orderService, WechatService $wechatService)
     {
         $user = $request->user();
         User::query()->where('id', $user->id)->update($request->only([
@@ -21,8 +23,15 @@ class OrderController extends ApiController
             'tel'
         ]));
 
-        $house_id = $request->input('house_id');
-        $result = $service->store($user, $house_id);
-        return $this->success($result);
+        $house_id = explode(',', $request->input('house_id'));
+        //创建订单
+        $order = $orderService->store($user, $house_id);
+
+        //微信那边下单
+        $notify = config('wechat.payment.default.notify_url');
+        $openid = $request->user()->openid;
+        $config = $wechatService->order($order->no, $order->rent * 100, '鑫南支付中心-房租支付', $openid, $notify);
+
+        return $config ? $this->success($config) : $this->error([], '微信支付签名验证失败');
     }
 }

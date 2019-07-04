@@ -163,9 +163,9 @@ class UserController extends ApiController
     {
         $rent = Auth::user()->house()
             ->with(['rentLog' => function ($query) {
-                $query->orderByDesc('created_at');
+                $query->whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'));
             }])
-            ->first();
+            ->get();
         return $this->success($rent);
     }
 

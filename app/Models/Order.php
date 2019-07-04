@@ -10,6 +10,12 @@ class Order extends Model
     const PAY_STATUS_PROCESSING = 'processing';
     const PAY_STATUS_SUCCESS = 'success';
     const PAY_STATUS_FAILED = 'failed';
+    public static $orderStatusMap = [
+        self::PAY_STATUS_PENDING => '待支付',
+        self::PAY_STATUS_PROCESSING => '进行中',
+        self::PAY_STATUS_SUCCESS => '已完成',
+        self::PAY_STATUS_FAILED => '已取消',
+    ];
 
     protected static function boot()
     {
@@ -46,9 +52,9 @@ class Order extends Model
         return false;
     }
 
-    public function items()
+    public function orders()
     {
-        return $this->hasMany(OrderItem::class);
+        return $this->hasMany(Order::class);
     }
 
     public function getTotalAmountAttribute($value)
