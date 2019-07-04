@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\User;
 use App\Services\OrderService;
 use App\Services\WechatService;
@@ -31,6 +32,9 @@ class OrderController extends ApiController
         $notify = config('wechat.payment.default.notify_url');
         $openid = $request->user()->openid;
         $config = $wechatService->order($order->no, $order->rent * 100, '鑫南支付中心-房租支付', $openid, $notify);
+        if (!$config) {//微信下单失败  删除原来订单
+            $order->delete();
+        }
 
         return $config ? $this->success($config) : $this->error([], '微信支付签名验证失败');
     }
