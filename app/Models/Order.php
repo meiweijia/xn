@@ -17,6 +17,20 @@ class Order extends Model
         self::PAY_STATUS_FAILED => '已取消',
     ];
 
+    protected $fillable = [
+        'no',
+        'total_amount',
+        'paid_at',
+        'payment_method',
+        'payment_no',
+        'status',
+    ];
+
+
+    protected $dates = [
+        'paid_at',
+    ];
+
     protected static function boot()
     {
         parent::boot();
