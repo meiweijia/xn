@@ -14,7 +14,11 @@ class OrderController extends ApiController
 {
     public function index(Request $request)
     {
-        return $this->success($request->user()->orders()->paginate(20));
+        $orders = $request->user()
+            ->orders()
+            ->with('item.house.layout')
+            ->paginate(20);
+        return $this->success($orders);
     }
 
     public function store(Request $request, OrderService $orderService, WechatService $wechatService)
