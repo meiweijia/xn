@@ -23,8 +23,8 @@ class OrderService
 
             $totalAmount = 0;
             // 遍历用户提交的 SKU
-            foreach ($items as $data) {
-                $house = House::query()->find($data['house_id']);
+            foreach ($items as $v) {
+                $house = House::query()->find($v);
                 // 创建一个 OrderItem 并直接与当前订单关联
                 $item = $order->items()->make([
                     'price' => $house->rent,
