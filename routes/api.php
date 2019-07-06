@@ -15,39 +15,41 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::name('api.user.')->prefix('user')->group(function () {
-    Route::post('register', 'UserController@register')->name('register');
-    Route::post('login', 'UserController@login')->name('login');
-    Route::post('verifyCode', 'UserController@verifyCode')->name('verifyCode');
-    Route::get('staff', 'UserController@getUsers')->name('staff');
-    Route::get('{id}/tasks', 'UserController@tasks')->name('tasks');
+    Route::post('register', 'UserController@register')->name('register');//注册
+    Route::post('login', 'UserController@login')->name('login');//登录
+    Route::post('verifyCode', 'UserController@verifyCode')->name('verifyCode');//获取验证码
+    Route::get('staff', 'UserController@getUsers')->name('staff');//员工列表
+    Route::get('{id}/tasks', 'UserController@tasks')->name('tasks');//员工任务列表
 });
 
 Route::name('api.user.')->prefix('user')->middleware('auth:api')->group(function () {
-    Route::get('/', 'UserController@index')->name('index');
-    Route::resource('/orders', 'OrderController')->only(['store', 'index'])->names('orders');
-    Route::get('/rent', 'UserController@rent')->name('rent');
-    Route::post('/uploadLayout', 'UserController@uploadLayout')->name('uploadLayout');
-
-    Route::get('categories', 'UserController@categories')->name('categories');
+    Route::get('/', 'UserController@index')->name('index');//我的
+    Route::resource('/orders', 'OrderController')->only(['store', 'index'])->names('orders');//我的订单
+    Route::get('/rent', 'UserController@rentShow')->name('rent.show');//我的房租
+    Route::post('/rent', 'UserController@rentStore')->name('rent.store');//交房租
+    Route::post('/uploadLayout', 'UserController@uploadLayout')->name('uploadLayout');//上传房源
+    Route::get('categories', 'UserController@categories')->name('categories');//员工管理的楼栋
 });
 
-Route::resource('categories', 'CategoryController')->only(['index', 'show'])->names('api.categories');
-Route::resource('regions', 'RegionController')->only(['index', 'show'])->names('api.regions');
-Route::resource('layouts', 'LayoutController')->only(['index', 'show'])->names('api.layouts');
-Route::resource('houses', 'HouseController')->only(['index', 'show'])->names('api.houses');
-Route::get('houses/{house}/tenants', 'HouseController@tenants')->name('api.houses.tenants');
+Route::resource('regions', 'RegionController')->only(['index', 'show'])->names('api.regions');//区域
+Route::resource('categories', 'CategoryController')->only(['index', 'show'])->names('api.categories');//楼栋
+Route::resource('layouts', 'LayoutController')->only(['index', 'show'])->names('api.layouts');//户型
+Route::resource('houses', 'HouseController')->only(['index', 'show'])->names('api.houses');//房间
+Route::get('houses/{house}/tenants', 'HouseController@tenants')->name('api.houses.tenants');//房间的租客
+Route::resource('banners', 'BannerController')->only(['index',])->names('api.banners');//banner
 
 Route::name('api.index.')->prefix('index')->group(function () {
-    Route::get('/', 'IndexController@index')->name('index');
-    Route::get('/houses', 'IndexController@houses')->name('houses');
+    Route::get('/', 'IndexController@index')->name('index');//首页
+    Route::get('/houses', 'IndexController@houses')->name('houses');//首页房间
 });
 
 Route::name('api.common.')->prefix('common')->group(function () {
-    Route::post('/upload', 'CommonController@upload')->name('upload');
+    Route::post('/upload', 'CommonController@upload')->name('upload');//上传
 });
 
-//支付回调
-Route::any('/pay/wechat_pay_notify', 'PayController@wechatPayNotify')->name('pay.wechat_pay_notify');
+
+Route::any('/pay/wechat_pay_notify', 'PayController@wechatPayNotify')->name('api.pay.wechat_pay_notify');//订房支付回调
+Route::any('/pay/rent_pay_notify','PayController@rentPayNotify')->name('api.pay.rent_pay_notify');//交房租回调
 
 //申请
 Route::resource('house_ins', 'HouseInController')->only(['index', 'store', 'show',])->names('api.house_ins');
@@ -67,7 +69,6 @@ Route::resource('public_area_cleans', 'PublicAreaCleanController')->only(['index
 Route::resource('articles', 'ArticleController')->only(['index', 'store', 'show',])->names('api.articles');
 Route::resource('tasks', 'TaskController')->only(['index', 'store', 'show',])->names('api.tasks');
 Route::resource('appointments', 'AppointmentController')->only(['index', 'store', 'show',])->names('api.appointments');
-Route::resource('banners', 'BannerController')->only(['index',])->names('api.banners');
 
 
 //审批

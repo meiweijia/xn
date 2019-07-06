@@ -7,6 +7,7 @@ use App\Models\House;
 use App\Models\Layout;
 use App\Models\Order;
 use App\Models\RentLog;
+use App\Services\WechatService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -159,7 +160,7 @@ class UserController extends ApiController
     /**
      * 我的房租
      */
-    public function rent()
+    public function rentShow()
     {
         $rent = Auth::user()->house()
             ->with(['rentLog' => function ($query) {
@@ -167,6 +168,26 @@ class UserController extends ApiController
             }])
             ->first();
         return $this->success($rent);
+    }
+
+    /**
+     * 交房租
+     *
+     * @param Request $request
+     * @param WechatService $wechatService
+     *
+     * @throws \App\Exceptions\InvalidRequestException
+     */
+    public function rentStore(Request $request, WechatService $wechatService)
+    {
+        $this->checkPar($request, [
+            'amount' => 'required',
+            'id' => 'required',
+        ]);
+        $no = Order::findAvailableNo();
+        $open_id = $request->user()->open_id;
+
+        $wechatService->order($no, $request->input('amount'), '鑫南支付中心-房租支付', $open_id, route('api.pay.rent_pay_notify'));
     }
 
     /**

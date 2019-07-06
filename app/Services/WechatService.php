@@ -17,9 +17,13 @@ class WechatService
      * @param string $notify_url
      *
      * @return mixed
+     * @throws
      */
     public function order($trade_no, $total_fee, $body, $openid, $notify_url)
     {
+        if (!app()->environment('production')) {//如果不是生产环境，微信的沙箱环境 支付金额必须位 101 和 102 也就是 1.01 元和 1.02 元
+            $total_fee = 101;
+        }
         $app = EasyWechat::payment();
         $par = [
             'body' => $body,

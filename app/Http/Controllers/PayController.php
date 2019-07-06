@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\RentLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
@@ -53,6 +54,48 @@ class PayController extends ApiController
 
             $order->save(); // 保存订单
 
+            return true; // 返回处理完成
+        });
+        return $response;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \EasyWeChat\Kernel\Exceptions\Exception
+     */
+    public function rentPayNotify()
+    {
+        $app = EasyWechat::payment();
+
+        $response = $app->handlePaidNotify(function ($message, $fail) use ($app) {
+            Log::info('rentPayNotify', $message);
+            // 使用通知里的 "微信支付订单号" 或者 "商户订单号" 去自己的数据库找到订单
+            $rent_log = RentLog::query()->where('no', $message['out_trade_no'])->first();
+
+            if (!$rent_log || $rent_log->status == 2) { // 如果订单不存在 或者 订单已经支付过了
+                return true; // 告诉微信，我已经处理完了，订单没找到，别再通知我了
+            }
+
+            ///////////// <- 建议在这里调用微信的【订单查询】接口查一下该笔订单的情况，确认是已经支付 /////////////
+            /// TODO 这里还没写完呢
+            $wechatOrder = $app->order->queryByTransactionId($message['transaction_id']);
+
+            if ($message['return_code'] === 'SUCCESS') { // return_code 表示通信状态，不代表支付状态
+                // 用户是否支付成功
+                if (Arr::get($message, 'result_code') === 'SUCCESS') {
+
+                    if ($rent_log->status == 1) {//房租状态为未支付（也就是已发送）时，才进这里的逻辑
+                        //更新订单数据
+                        $rent_log->status = 2;//房租设置为已支付
+                        $rent_log->payment_no = $message['transaction_id'];
+                        $rent_log->payment_method = 'wechat';
+                    }
+                }
+            } else {
+                return $fail('通信失败，请稍后再通知我');
+            }
+
+            $rent_log->save(); // 保存订单
             return true; // 返回处理完成
         });
         return $response;
