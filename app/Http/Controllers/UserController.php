@@ -21,7 +21,7 @@ class UserController extends ApiController
 {
     public function register(UserRequest $request)
     {
-        $verifyData = Cache::get($request->tel);
+        $verifyData = Cache::get('verification_code_' . $request->tel);
 
         if (!$verifyData) {
             return $this->error([], '验证码已失效');
