@@ -77,7 +77,7 @@ class UserController extends ApiController
             try {
                 EasySms::send($request->tel, [
                     'content' => '您的验证码为: ' . $code,
-                    'template' => 'SMS_129070037',
+                    'template' => 'SMS_169365272',
                     'data' => [
                         'code' => $code
                     ],

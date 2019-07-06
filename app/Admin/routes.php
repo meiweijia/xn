@@ -10,7 +10,7 @@ Route::group([
     'middleware' => config('admin.route.middleware'),
 ], function (Router $router) {
 
-    $router->redirect('/', 'admin/rent_logs')->name('admin.home');
+    $router->redirect('/', '/admin/rent_logs')->name('admin.home');
 
     $router->resource('rent_logs', 'RentLogController')->names('admin.rent_logs');
     $router->resource('regions', 'RegionController')->names('admin.regions');
