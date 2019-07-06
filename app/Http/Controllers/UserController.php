@@ -27,7 +27,7 @@ class UserController extends ApiController
             return $this->error([], '验证码已失效');
         }
 
-        if (!hash_equals($verifyData['code'], $request->verification_code)) {
+        if (!hash_equals(strval($verifyData['code']), $request->verification_code)) {
             return $this->error([], '验证码错误');
         }
 
