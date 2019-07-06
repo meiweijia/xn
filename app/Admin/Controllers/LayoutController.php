@@ -145,7 +145,6 @@ class LayoutController extends Controller
         $form->hasMany('houses', '房间列表', function (Form\NestedForm $form) {
             $form->text('number', '房号')->rules('required');
             $form->decimal('rent', '租金(默认继承自户型)');
-            $form->number('peoples', '入住人数')->rules('required');
             $form->select('status', '可入住')->default(true)->options([
                 '否',
                 '是',

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\InvalidRequestException;
+use App\Models\Category;
+use App\Models\House;
+use App\Models\Layout;
 use App\Traits\ApiResponse;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -25,7 +28,7 @@ class ApiController extends Controller
 
     protected function index(Request $request)
     {
-        $approve = $request->input('approve');
+        $approve = $request->input('approve');//审批
         $this->model = $this->getInstance($request);
         $result = $this->model
             ->when($this->with, function ($query) {
@@ -36,6 +39,27 @@ class ApiController extends Controller
             })
             ->paginate(20);
         return $this->success($result);
+    }
+
+    protected function indexAdmin(Request $request)
+    {
+        $this->model = $this->getInstance($request);
+        $par = '';
+        if ($this->model instanceof Category) {
+            $par = 'region_id';
+        }
+        if ($this->model instanceof Layout) {
+            $par = 'category_id';
+        }
+        if ($this->model instanceof House) {
+            $par = 'layout_id';
+        }
+        $q = $request->input('q');//后台 select 联动需要
+        return $this->model
+            ->when($q && $par, function ($query) use ($q, $par) {
+                $query->where($par, $q);
+            })
+            ->get();
     }
 
     protected function show(Request $request, $id)

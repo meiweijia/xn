@@ -52,4 +52,14 @@ class House extends Model
     {
         $this->attributes['rent'] = $value * 100;
     }
+
+    public static function getRent($id)
+    {
+        $house = House::query()->find($id);
+        if (!$house->rent) {
+            $layout = Layout::query()->find($house->layout_id);
+            return $layout->rent;
+        }
+        return $house->rent;
+    }
 }

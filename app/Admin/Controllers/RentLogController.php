@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Extensions\RentLogExporter;
+use App\Models\Region;
 use App\Models\RentLog;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
@@ -72,8 +73,7 @@ class RentLogController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header('Create')
-            ->description('description')
+            ->header('水电费结算')
             ->body($this->form());
     }
 
@@ -85,8 +85,8 @@ class RentLogController extends Controller
     protected function grid()
     {
         $grid = new Grid(new RentLog);
+        $grid->model()->orderBy('created_at', 'desc');
 
-        //$grid->id('Id');
         $grid->property_name('物业');
         $grid->house_number('房号');
         $grid->house_rent('房费');
@@ -158,23 +158,24 @@ class RentLogController extends Controller
     protected function form()
     {
         $form = new Form(new RentLog);
+        $form->ignore(['region', 'category', 'layout']);//忽略的字段
 
-        $form->number('property_id', 'Property id');
-        $form->number('house_id', 'House id');
-        $form->number('house_number', 'House number');
-        $form->number('house_rent', 'House rent');
-        $form->decimal('last_electric_number', 'Last electric number')->default(0.0);
-        $form->decimal('electric_number', 'Electric number')->default(0.0);
-        $form->number('electric_cost', 'Electric cost');
-        $form->decimal('last_cold_water_number', 'Last cold water number');
-        $form->decimal('cold_water_number', 'Cold water number');
-        $form->decimal('last_hot_water_number', 'Last hot water number');
-        $form->decimal('hot_water_number', 'Hot water number');
-        $form->number('water_cost', 'Water cost');
-        $form->number('other_cost', 'Other cost');
-        $form->number('total_cost', 'Total cost');
-        $form->switch('status', 'Status');
+        $form->select('region', '区域')
+            ->options(Region::query()->pluck('name', 'id'))
+            ->load('category', '/api/admin_api/categories', 'id', 'name');
+        $form->select('category', '楼栋')
+            ->load('layout', '/api/admin_api/layouts', 'id', 'name');
+        $form->select('layout', '户型')
+            ->load('house_id', '/api/admin_api/houses', 'id', 'number');
+        $form->select('house_id', '房号');
 
+        $form->decimal('last_electric_number', '上月电表(度)');
+        $form->decimal('electric_number', '本月电表');
+        $form->decimal('last_cold_water_number', '上月冷水表(m3)');
+        $form->decimal('cold_water_number', '本月冷水表');
+        $form->decimal('last_hot_water_number', '上月热水表');
+        $form->decimal('hot_water_number', '本月热水表');
+        $form->decimal('other_cost', '其他费用');
         return $form;
     }
 }

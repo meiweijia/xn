@@ -87,3 +87,11 @@ Route::post('house_out_cleans/{id}/approve', 'HouseOutCleanController@approve')-
 Route::post('public_area_cleans/{id}/approve', 'PublicAreaCleanController@approve')->name('api.public_area_cleans.approve');
 Route::post('articles/{id}/approve', 'ArticleController@approve')->name('api.articles.approve');
 Route::post('tasks/{id}/approve', 'TaskController@approve')->name('api.tasks.approve');
+
+//后台 SELECT 接口
+Route::name('api.admin_api.')->prefix('admin_api')->group(function () {
+    Route::get('regions', 'RegionController@indexAdmin')->name('regions');//区域
+    Route::get('categories', 'CategoryController@indexAdmin')->name('categories');//区域
+    Route::get('layouts', 'LayoutController@indexAdmin')->name('layouts');//区域
+    Route::get('houses', 'HouseController@indexAdmin')->name('houses');//区域
+});
