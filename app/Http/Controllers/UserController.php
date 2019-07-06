@@ -37,6 +37,9 @@ class UserController extends ApiController
             'name' => '',
         ]);
 
+        //删除原来的验证码
+        Cache::forget('verification_code_' . $request->tel);
+
         //注册成功 给予 guest 权限
         $user->assignRole('游客');
         return $this->success($user, '注册成功！');
@@ -85,9 +88,9 @@ class UserController extends ApiController
             }
         }
 
-        $expiredAt = now()->addMinutes(10);
+        $expiredAt = now()->addMinutes(5);
         // 缓存验证码 10分钟过期。
-        Cache::put($request->tel, ['code' => $code], $expiredAt);
+        Cache::put('verification_code_' . $request->tel, ['code' => $code], $expiredAt);
 
         return $this->success([
             'expired_at' => $expiredAt->toDateTimeString(),
