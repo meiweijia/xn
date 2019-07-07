@@ -33,6 +33,10 @@ class UserController extends ApiController
 
         $code = $request->input('code');
         $open_id = $wechatService->openid($code);
+        if(!$open_id){
+            return $this->error([], 'code错误');
+        }
+
         $user = User::query()->create([
             'tel' => $request->tel,
             'password' => bcrypt($request->password),
