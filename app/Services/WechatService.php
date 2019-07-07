@@ -59,7 +59,7 @@ class WechatService
     {
         $app = EasyWechat::miniProgram();
         $result = $app->auth->session($code);
-        if ($result['errcode']) {
+        if (array_key_exists('errcode', $result)) {
             return false;
         }
         return $result['openid'];
