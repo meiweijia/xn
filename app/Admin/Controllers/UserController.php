@@ -23,8 +23,7 @@ class UserController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('Index')
-            ->description('description')
+            ->header('用户管理')
             ->body($this->grid());
     }
 

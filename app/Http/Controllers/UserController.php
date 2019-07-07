@@ -19,7 +19,7 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends ApiController
 {
-    public function register(UserRequest $request)
+    public function register(UserRequest $request, WechatService $wechatService)
     {
         $verifyData = Cache::get('verification_code_' . $request->tel);
 
@@ -31,10 +31,13 @@ class UserController extends ApiController
             return $this->error([], '验证码错误');
         }
 
+        $code = $request->input('code');
+        $open_id = $wechatService->openid($code);
         $user = User::query()->create([
             'tel' => $request->tel,
             'password' => bcrypt($request->password),
             'name' => '',
+            'open_id' => $open_id,
         ]);
 
         //删除原来的验证码
@@ -187,10 +190,9 @@ class UserController extends ApiController
         $this->checkPar($request, [
             'amount' => 'required',
             'id' => 'required',
-            'code' => 'required',
         ]);
         $no = Order::findAvailableNo();
-        $open_id = $wechatService->openid($request->code);
+        $open_id = $request->user()->open_id;
 
         $wechatService->order($no, $request->input('amount'), '鑫南支付中心-房租支付', $open_id, route('api.pay.rent_pay_notify'));
     }
