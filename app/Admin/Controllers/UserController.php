@@ -9,6 +9,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -81,19 +82,24 @@ class UserController extends Controller
         $grid = new Grid(new User);
 
         $grid->id('Id');
-        $grid->name('Name');
-        $grid->tel('Tel');
-        $grid->email('Email');
-        $grid->email_verified_at('Email verified at');
-        $grid->password('Password');
-        $grid->api_token('Api token');
-        $grid->open_id('Open id');
-        $grid->avatar('Avatar');
-        $grid->remember_token('Remember token');
-        $grid->type('Type');
-        $grid->created_at('Created at');
-        $grid->updated_at('Updated at');
+        $grid->name('姓名');
+        $grid->tel('电话');
+        $grid->avatar('头像')->image();
+        $grid->type('Type')->display(function ($value) {
+            return $value == 1 ? '员工' : '租户';
+        });
+        $grid->roles('角色')->display(function ($roles) {
+            $roles = array_map(function ($role) {
+                return "<span class='label label-success'>{$role['name']}</span>";
+            }, $roles);
 
+            return join('&nbsp;', $roles);
+        });
+        $grid->created_at('创建时间');
+
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+        });
         return $grid;
     }
 
@@ -132,18 +138,22 @@ class UserController extends Controller
     protected function form()
     {
         $form = new Form(new User);
+        $form->ignore(['role']);
 
-        $form->text('name', 'Name');
-        $form->text('tel', 'Tel');
-        $form->email('email', 'Email');
-        $form->datetime('email_verified_at', 'Email verified at')->default(date('Y-m-d H:i:s'));
+        $form->text('name', '姓名');
+        $form->text('tel', '电话');
         $form->password('password', 'Password');
-        $form->text('api_token', 'Api token');
-        $form->text('open_id', 'Open id');
-        $form->image('avatar', 'Avatar');
-        $form->text('remember_token', 'Remember token');
-        $form->switch('type', 'Type')->default(1);
+        $form->image('avatar', '头像');
+        $form->select('type', '类型')->options([
+            1 => '租户',
+            2 => '员工'
+        ])->default(1);
+        $form->multipleSelect('roles', '权限')->options(Role::all()->pluck('name', 'id'));
 
+        $form->disableViewCheck();
+        $form->tools(function (Form\Tools $tools){
+            $tools->disableView();
+        });
         return $form;
     }
 }
