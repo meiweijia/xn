@@ -163,7 +163,7 @@ class UserController extends ApiController
                 if ($status)
                     $query->where('status', $status);
             })
-            ->paginate(10);
+            ->get();
         return $this->success($orders);
     }
 
