@@ -33,7 +33,7 @@ class UserController extends ApiController
 
         $code = $request->input('code');
         $open_id = $wechatService->openid($code);
-        if(!$open_id){
+        if (!$open_id) {
             return $this->error([], 'code错误');
         }
 
@@ -143,7 +143,7 @@ class UserController extends ApiController
         $type = $request->input('type');//1待支付 2进行中 3已完成 4已取消
         $orders = Order::query()
             ->with('items')
-            ->when($type, function ($query, $type) {
+            ->when($type, function ($query) use ($type) {
                 switch ($type) {
                     case 1:
                         $status = Order::PAY_STATUS_PENDING;
