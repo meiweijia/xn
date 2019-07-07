@@ -180,15 +180,17 @@ class UserController extends ApiController
      * @param WechatService $wechatService
      *
      * @throws \App\Exceptions\InvalidRequestException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
      */
     public function rentStore(Request $request, WechatService $wechatService)
     {
         $this->checkPar($request, [
             'amount' => 'required',
             'id' => 'required',
+            'code' => 'required',
         ]);
         $no = Order::findAvailableNo();
-        $open_id = $request->user()->open_id;
+        $open_id = $wechatService->openid($request->code);
 
         $wechatService->order($no, $request->input('amount'), '鑫南支付中心-房租支付', $open_id, route('api.pay.rent_pay_notify'));
     }

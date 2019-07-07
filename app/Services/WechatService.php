@@ -47,4 +47,17 @@ class WechatService
             return false;
         }
     }
+
+    /**
+     * 获取小程序用户的 openId
+     *
+     * @param $code
+     * @return array|\EasyWeChat\Kernel\Support\Collection|object|\Psr\Http\Message\ResponseInterface|string
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     */
+    public function openid($code)
+    {
+        $app = EasyWechat::miniProgram();
+        return $app->auth->session($code);
+    }
 }
