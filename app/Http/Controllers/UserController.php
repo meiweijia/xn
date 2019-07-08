@@ -76,11 +76,11 @@ class UserController extends ApiController
     /**
      * 找回密码
      *
-     * @param UserRequest $request
+     * @param Request $request
      *
      * @return mixed
      */
-    public function resetPassword(UserRequest $request)
+    public function resetPassword(Request $request)
     {
         $verifyData = Cache::get('verification_code_' . $request->tel);
 
