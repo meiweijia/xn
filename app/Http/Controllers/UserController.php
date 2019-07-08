@@ -196,7 +196,6 @@ class UserController extends ApiController
     {
         $this->checkPar($request, [
             'amount' => 'required',
-            'id' => 'required',
         ]);
         $no = Order::findAvailableNo();
         $open_id = $request->user()->open_id;
