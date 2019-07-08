@@ -177,6 +177,9 @@ class UserController extends ApiController
                 $query->whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'));
             }])
             ->first();
+        $rent->electric_unit_price = config('electric_unit_price');
+        $rent->cold_water_unit_price = config('cold_water_unit_price');
+        $rent->hot_water_unit_price = config('hot_water_unit_price');
         return $this->success($rent);
     }
 
