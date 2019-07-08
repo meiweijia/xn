@@ -154,6 +154,12 @@ class UserController extends Controller
         $form->tools(function (Form\Tools $tools){
             $tools->disableView();
         });
+
+        $form->saving(function (Form $form) {
+            if ($form->password && $form->model()->password != $form->password) {
+                $form->password = bcrypt($form->password);
+            }
+        });
         return $form;
     }
 }
