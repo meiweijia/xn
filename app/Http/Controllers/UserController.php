@@ -113,6 +113,9 @@ class UserController extends ApiController
      */
     public function verifyCode(VerifyCodeRequest $request)
     {
+        $type = $request->input('type');
+        $template = EasySms::$codeTypeMap[$type];
+
         if (!app()->environment('production')) {
             $code = '1234';
         } else {
@@ -122,7 +125,7 @@ class UserController extends ApiController
             try {
                 EasySms::send($request->tel, [
                     'content' => '您的验证码为: ' . $code,
-                    'template' => 'SMS_169365272',
+                    'template' => $template,
                     'data' => [
                         'code' => $code
                     ],

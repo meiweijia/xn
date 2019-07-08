@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\Facade;
  */
 class EasySms extends Facade
 {
+    public static $codeTypeMap = [
+        1 => 'SMS_169365272',
+        2 => 'SMS_170045043',
+    ];
+
     protected static function getFacadeAccessor()
     {
         return 'easySms';
