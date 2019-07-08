@@ -202,7 +202,7 @@ class UserController extends ApiController
         $rent_log->update(['no' => $no]);
         $open_id = $request->user()->open_id;
 
-        $config = $wechatService->order($no, $request->input('amount'), '鑫南支付中心-房租支付', $open_id, route('api.pay.rent_pay_notify'));
+        $config = $wechatService->order($no, $request->input('amount') * 100, '鑫南支付中心-房租支付', $open_id, route('api.pay.rent_pay_notify'));
 
         if (!$config) {//微信下单失败  删除原来订单 并把房子状态设置为可以出租
             $rent_log->update(['no' => $no]);

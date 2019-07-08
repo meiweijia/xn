@@ -50,4 +50,14 @@ class RentLog extends Model
     {
         return $this->belongsTo(Property::class);
     }
+
+    public function getHouseRentAttribute($value)
+    {
+        return $value / 100;
+    }
+
+    public function setAHouseRentAttribute($value)
+    {
+        $this->attributes['house_rent'] = $value * 100;
+    }
 }

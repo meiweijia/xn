@@ -16,11 +16,11 @@ class CreateRentLogsTable extends Migration
         Schema::create('rent_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
             //$table->unsignedBigInteger('property_id')->default(0)->comment('物业ID');
-            //$table->foreign('property_id')->references('id')->on('properties');
+            //$table->foreign('property_id')->references('id')->on('properties');;
             $table->string('property')->default('')->comment('物业名');
             $table->unsignedInteger('house_id')->comment('房间');
             $table->unsignedInteger('house_number')->default(0)->comment('房间编号');
-            $table->decimal('house_rent')->default(0.00)->comment('租金');
+            $table->unsignedInteger('house_rent')->default(0)->comment('租金');
             $table->decimal('last_electric_number', 8, 1)->default(0.0)->comment('上月电表度数');
             $table->decimal('electric_number', 8, 1)->default(0.0)->comment('本月电表度数');
             $table->decimal('electric_cost')->default(0)->comment('电费');
