@@ -207,7 +207,7 @@ class UserController extends ApiController
         if (!$config) {//微信下单失败  删除原来订单 并把房子状态设置为可以出租
             $rent_log->update(['no' => $no]);
         }
-        $config ? $this->success($config) : $this->error([], '微信支付签名验证失败');
+        return $config ? $this->success($config) : $this->error([], '微信支付签名验证失败');
     }
 
     /**
