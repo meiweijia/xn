@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\House;
 use App\Models\Order;
 use App\Models\RentLog;
+use App\Services\WechatService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
@@ -11,6 +13,23 @@ use Overtrue\LaravelWeChat\Facade as EasyWechat;
 
 class PayController extends ApiController
 {
+    public function store(Request $request, WechatService $wechatService)
+    {
+        //微信那边下单
+        $order = Order::query()->find($request->input('id'));
+        $notify = config('wechat.payment.default.notify_url');
+        $open_id = $request->user()->open_id;
+        $total_fee = $order->total_amount * 100;
+        $config = $wechatService->order($order->no, $total_fee, '鑫南支付中心-房租支付', $open_id, $notify);
+        if (!$config) {//微信下单失败  删除原来订单 并把房子状态设置为可以出租
+            $order->delete();
+            $order->items()->house()->update(['status' => 1]);
+        }
+
+        return $config ? $this->success($config) : $this->error([], '微信支付签名验证失败');
+    }
+
+
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \EasyWeChat\Kernel\Exceptions\Exception
@@ -39,7 +58,7 @@ class PayController extends ApiController
                     if ($order->status == Order::PAY_STATUS_PENDING) {//订单状态为未支付时，才进这里的逻辑
                         //更新订单数据
                         $order->paid_at = time(); // 更新支付时间为当前时间
-                        $order->status = Order::PAY_STATUS_PROCESSING;//订单设置为处理中
+                        $order->status = Order::PAY_STATUS_SUCCESS;//订单设置为已完成
                         $order->payment_no = $message['transaction_id'];
                         $order->payment_method = 'wechat';
                     }

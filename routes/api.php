@@ -47,9 +47,9 @@ Route::name('api.common.')->prefix('common')->group(function () {
     Route::post('/upload', 'CommonController@upload')->name('upload');//上传
 });
 
-
+Route::post('/pay', 'PayController@store')->name('api.pay.store');//支付订单
 Route::any('/pay/wechat_pay_notify', 'PayController@wechatPayNotify')->name('api.pay.wechat_pay_notify');//订房支付回调
-Route::any('/pay/rent_pay_notify','PayController@rentPayNotify')->name('api.pay.rent_pay_notify');//交房租回调
+Route::any('/pay/rent_pay_notify', 'PayController@rentPayNotify')->name('api.pay.rent_pay_notify');//交房租回调
 
 //申请
 Route::resource('house_ins', 'HouseInController')->only(['index', 'store', 'show',])->names('api.house_ins');
