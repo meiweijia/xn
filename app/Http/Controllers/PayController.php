@@ -13,6 +13,11 @@ use Overtrue\LaravelWeChat\Facade as EasyWechat;
 
 class PayController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('store');
+    }
+
     public function store(Request $request, WechatService $wechatService)
     {
         //微信那边下单

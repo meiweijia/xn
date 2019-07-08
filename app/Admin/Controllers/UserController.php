@@ -142,7 +142,7 @@ class UserController extends Controller
 
         $form->text('name', '姓名');
         $form->text('tel', '电话');
-        $form->password('password', 'Password');
+        $form->password('password', '密码');
         $form->image('avatar', '头像');
         $form->select('type', '类型')->options([
             1 => '租户',
