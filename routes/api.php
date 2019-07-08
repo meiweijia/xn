@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::name('api.user.')->prefix('user')->group(function () {
     Route::post('register', 'UserController@register')->name('register');//注册
     Route::post('login', 'UserController@login')->name('login');//登录
+    Route::post('reset_password','UserController@resetPassword')->name('reset_password');//找回密码
     Route::post('verifyCode', 'UserController@verifyCode')->name('verifyCode');//获取验证码
     Route::get('staff', 'UserController@getUsers')->name('staff');//员工列表
     Route::get('{id}/tasks', 'UserController@tasks')->name('tasks');//员工任务列表

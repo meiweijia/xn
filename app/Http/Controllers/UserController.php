@@ -73,6 +73,41 @@ class UserController extends ApiController
         return $this->error([], '账号或密码错误，登录失败！');
     }
 
+    /**
+     * 找回密码
+     * @param UserRequest $request
+     *
+     * @return mixed
+     */
+    public function resetPassword(UserRequest $request)
+    {
+        $verifyData = Cache::get('verification_code_' . $request->tel);
+
+        if (!$verifyData) {
+            return $this->error([], '验证码已失效');
+        }
+
+        if (!hash_equals(strval($verifyData['code']), $request->verification_code)) {
+            return $this->error([], '验证码错误');
+        }
+
+        $user = User::query()->create([
+            'password' => bcrypt($request->password),
+        ]);
+
+        //删除原来的验证码
+        Cache::forget('verification_code_' . $request->tel);
+
+        return $this->success($user, '密码找回成功！');
+    }
+
+    /**
+     * 获取验证码
+     *
+     * @param VerifyCodeRequest $request
+     *
+     * @return mixed
+     */
     public function verifyCode(VerifyCodeRequest $request)
     {
         if (!app()->environment('production')) {
