@@ -75,6 +75,7 @@ class UserController extends ApiController
 
     /**
      * 找回密码
+     *
      * @param UserRequest $request
      *
      * @return mixed
@@ -91,9 +92,11 @@ class UserController extends ApiController
             return $this->error([], '验证码错误');
         }
 
-        $user = User::query()->create([
-            'password' => bcrypt($request->password),
-        ]);
+        $user = User::query()
+            ->where('tel', $request->input('tel'))
+            ->update([
+                'password' => bcrypt($request->password),
+            ]);
 
         //删除原来的验证码
         Cache::forget('verification_code_' . $request->tel);
@@ -131,7 +134,7 @@ class UserController extends ApiController
         }
 
         $expiredAt = now()->addMinutes(5);
-        // 缓存验证码 10分钟过期。
+        // 缓存验证码 5分钟过期。
         Cache::put('verification_code_' . $request->tel, ['code' => $code], $expiredAt);
 
         return $this->success([
