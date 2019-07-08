@@ -170,11 +170,17 @@ class RentLogController extends Controller
         $form->select('house_id', '房号');
 
         $form->decimal('last_electric_number', '上月电表(度)');
-        $form->decimal('electric_number', '本月电表');
+        $form->decimal('electric_number', '本月电表')->rules('gte:last_electric_number', [
+            'gte' => '本月电表必须大于等于上月电表'
+        ]);
         $form->decimal('last_cold_water_number', '上月冷水表(m3)');
-        $form->decimal('cold_water_number', '本月冷水表');
+        $form->decimal('cold_water_number', '本月冷水表')->rules('gte:last_cold_water_number', [
+            'gte' => '本月冷水表必须大于等于上月冷水表'
+        ]);
         $form->decimal('last_hot_water_number', '上月热水表');
-        $form->decimal('hot_water_number', '本月热水表');
+        $form->decimal('hot_water_number', '本月热水表')->rules('gte:last_hot_water_number', [
+            'gte' => '本月热水表必须大于等于上月热水表'
+        ]);
         $form->decimal('other_cost', '其他费用');
         return $form;
     }

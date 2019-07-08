@@ -56,7 +56,37 @@ class RentLog extends Model
         return $value / 100;
     }
 
-    public function setAHouseRentAttribute($value)
+    public function setHouseRentAttribute($value)
+    {
+        $this->attributes['house_rent'] = $value * 100;
+    }
+
+    public function getWaterCostAttribute($value)
+    {
+        return $value / 100;
+    }
+
+    public function setWaterCostAttribute($value)
+    {
+        $this->attributes['house_rent'] = $value * 100;
+    }
+
+    public function getOtherCostAttribute($value)
+    {
+        return $value / 100;
+    }
+
+    public function setOtherCostAttribute($value)
+    {
+        $this->attributes['house_rent'] = $value * 100;
+    }
+
+    public function getTotalCostAttribute($value)
+    {
+        return $value / 100;
+    }
+
+    public function setTotalCostAttribute($value)
     {
         $this->attributes['house_rent'] = $value * 100;
     }

@@ -28,9 +28,9 @@ class CreateRentLogsTable extends Migration
             $table->decimal('cold_water_number', 8, 0)->default(0)->comment('本月冷水表度数');
             $table->decimal('last_hot_water_number', 8, 0)->default(0)->comment('上月热水表度数');
             $table->decimal('hot_water_number', 8, 0)->default(0)->comment('本月热水表度数');
-            $table->decimal('water_cost')->default(0)->comment('水费');
-            $table->decimal('other_cost')->default(0)->comment('其他费用');
-            $table->decimal('total_cost')->default(0)->comment('费用合计');
+            $table->unsignedInteger('water_cost')->default(0)->comment('水费');
+            $table->unsignedInteger('other_cost')->default(0)->comment('其他费用');
+            $table->unsignedInteger('total_cost')->default(0)->comment('费用合计');
             $table->unsignedTinyInteger('status')->default(0)->comment('状态 0未发送 1已发送 2已支付');
             $table->string('payment_method')->nullable()->comment('支付方式');
             $table->string('payment_no')->nullable()->comment('支付方订单号');
