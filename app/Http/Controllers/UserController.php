@@ -21,6 +21,11 @@ class UserController extends ApiController
 {
     public function register(UserRequest $request, WechatService $wechatService)
     {
+        $user = User::query()->where('tel',$request->tel)->first();
+        if($user){
+            return $this->error([],'该手机已经注册，请重新填写');
+        }
+        
         $verifyData = Cache::get('verification_code_' . $request->tel);
 
         if (!$verifyData) {
