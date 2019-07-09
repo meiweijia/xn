@@ -73,6 +73,12 @@ class UserController extends ApiController
         return $this->error([], '账号或密码错误，登录失败！');
     }
 
+    public function logout(Request $request)
+    {
+        $result = $request->user()->update(['api_token' => null]);
+        return $this->success($result, '退出成功');
+    }
+
     /**
      * 找回密码
      *

@@ -24,6 +24,7 @@ Route::name('api.user.')->prefix('user')->group(function () {
 });
 
 Route::name('api.user.')->prefix('user')->middleware('auth:api')->group(function () {
+    Route::post('/logout', 'UserController@logout')->name('logout');
     Route::get('/', 'UserController@index')->name('index');//我的
     Route::get('/orders', 'UserController@orders')->name('orders');//我的订单
     Route::post('/orders', 'OrderController@store')->name('orders');//支付订单
