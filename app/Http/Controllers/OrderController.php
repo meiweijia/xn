@@ -48,7 +48,7 @@ class OrderController extends ApiController
         if (isset($config['err_code_des'])) {//微信下单失败  删除原来订单 并把房子状态设置为可以出租
             $order->delete();
             House::query()->whereIn('id', $house_ids)->update(['status' => 1]);
-            return $this->error($config['err_code_des']);
+            return $this->error([], $config['err_code_des']);
         }
 
         return $this->success($config);

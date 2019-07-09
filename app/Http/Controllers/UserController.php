@@ -246,7 +246,7 @@ class UserController extends ApiController
         $config = $wechatService->order($no, $request->input('amount') * 100, '鑫南支付中心-房租支付', $open_id, route('api.pay.rent_pay_notify'));
 
         if (isset($config['err_code_des'])) {
-            return $this->error($config['err_code_des']);
+            return $this->error([], $config['err_code_des']);
         }
         return $this->success($config);
     }
