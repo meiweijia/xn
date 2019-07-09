@@ -22,10 +22,6 @@ class AppointmentController extends ApiController
 
     public function store(Request $request)
     {
-        User::query()->where('id', Auth::id())->update($request->only([
-            'name',
-            'tel',
-        ]));
         $result = $request->user()->appointments()->create($request->only([
             'house_id',//
             'name',//姓名
