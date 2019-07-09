@@ -87,8 +87,7 @@ class RentLogController extends Controller
         $grid = new Grid(new RentLog);
         $grid->model()->orderBy('created_at', 'desc');
 
-        $grid->property_name('物业');
-        $grid->house_number('房号');
+        $grid->house()->number('房号');
         $grid->house_rent('房费');
         $grid->last_electric_number('上月电表(度)');
         $grid->electric_number('本月电表');

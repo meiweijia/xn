@@ -245,10 +245,10 @@ class UserController extends ApiController
 
         $config = $wechatService->order($no, $request->input('amount') * 100, '鑫南支付中心-房租支付', $open_id, route('api.pay.rent_pay_notify'));
 
-        if (!$config) {//微信下单失败  删除原来订单 并把房子状态设置为可以出租
-            $rent_log->update(['no' => $no]);
+        if (isset($config['err_code_des'])) {
+            return $this->error($config['err_code_des']);
         }
-        return $config ? $this->success($config) : $this->error([], '微信支付签名验证失败');
+        return $this->success($config);
     }
 
     /**

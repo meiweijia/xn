@@ -44,7 +44,7 @@ class WechatService
             $config = $app->jssdk->sdkConfig($result['prepayid']);
             return $config;
         } else {
-            return false;
+            return $result;
         }
     }
 

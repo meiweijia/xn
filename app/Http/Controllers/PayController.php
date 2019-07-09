@@ -26,12 +26,13 @@ class PayController extends ApiController
         $open_id = $request->user()->open_id;
         $total_fee = $order->total_amount * 100;
         $config = $wechatService->order($order->no, $total_fee, '鑫南支付中心-房租支付', $open_id, $notify);
-        if (!$config) {//微信下单失败  删除原来订单 并把房子状态设置为可以出租
+        if (isset($config['err_code_des'])) {//微信下单失败  删除原来订单 并把房子状态设置为可以出租
             $order->delete();
             $order->items()->house()->update(['status' => 1]);
-        }
+            return $this->error($config['err_code_des']);
 
-        return $config ? $this->success($config) : $this->error([], '微信支付签名验证失败');
+        }
+        return $this->success($config);
     }
 
 
