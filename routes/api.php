@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::name('api.user.')->prefix('user')->group(function () {
     Route::post('register', 'UserController@register')->name('register');//注册
     Route::post('login', 'UserController@login')->name('login');//登录
-    Route::post('reset_password','UserController@resetPassword')->name('reset_password');//找回密码
+    Route::post('reset_password', 'UserController@resetPassword')->name('reset_password');//找回密码
     Route::post('verifyCode', 'UserController@verifyCode')->name('verifyCode');//获取验证码
     Route::get('staff', 'UserController@getUsers')->name('staff');//员工列表
     Route::get('{id}/tasks', 'UserController@tasks')->name('tasks');//员工任务列表
@@ -26,6 +26,7 @@ Route::name('api.user.')->prefix('user')->group(function () {
 Route::name('api.user.')->prefix('user')->middleware('auth:api')->group(function () {
     Route::get('/', 'UserController@index')->name('index');//我的
     Route::get('/orders', 'UserController@orders')->name('orders');//我的订单
+    Route::post('/orders', 'OrderController@store')->name('orders');//支付订单
     Route::get('/rent', 'UserController@rentShow')->name('rent.show');//我的房租
     Route::post('/rent', 'UserController@rentStore')->name('rent.store');//交房租
     Route::post('/uploadLayout', 'UserController@uploadLayout')->name('uploadLayout');//上传房源
