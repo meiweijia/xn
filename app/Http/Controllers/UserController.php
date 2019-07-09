@@ -182,7 +182,7 @@ class UserController extends ApiController
     public function orders(Request $request)
     {
         $type = $request->input('type');//1待支付 2进行中 3已完成 4已取消
-        $orders = Order::query()
+        $orders = $request->user()->orders()
             ->with('items.house.layout')
             ->when($type, function ($query) use ($type) {
                 switch ($type) {
