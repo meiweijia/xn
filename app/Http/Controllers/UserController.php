@@ -120,6 +120,13 @@ class UserController extends ApiController
     public function verifyCode(VerifyCodeRequest $request)
     {
         $type = $request->input('type');
+        if($type == 1){
+            $user = User::query()->where('tel',$request->tel)->first();
+            if($user){
+                return $this->error([],'该手机已经注册，请重新填写');
+            }
+        }
+
         $template = EasySms::$codeTypeMap[$type];
 
         if (!app()->environment('production')) {
