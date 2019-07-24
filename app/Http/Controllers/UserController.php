@@ -38,7 +38,7 @@ class UserController extends ApiController
 
         $code = $request->input('code');
         $iv = $request->input('iv');
-        $encryptedData = $request->input('encryptedData');
+        $encryptedData = $request->input('encrypted_data');
         $decryptedData = $wechatService->userInfo($code, $iv, $encryptedData);
 
         if (!$decryptedData) {
