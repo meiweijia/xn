@@ -21,11 +21,11 @@ class UserController extends ApiController
 {
     public function register(UserRequest $request, WechatService $wechatService)
     {
-        $user = User::query()->where('tel',$request->tel)->first();
-        if($user){
-            return $this->error([],'该手机已经注册，请重新填写');
+        $user = User::query()->where('tel', $request->tel)->first();
+        if ($user) {
+            return $this->error([], '该手机已经注册，请重新填写');
         }
-        
+
         $verifyData = Cache::get('verification_code_' . $request->tel);
 
         if (!$verifyData) {
@@ -37,8 +37,11 @@ class UserController extends ApiController
         }
 
         $code = $request->input('code');
-        $open_id = $wechatService->openid($code);
-        if (!$open_id) {
+        $iv = $request->input('iv');
+        $encryptedData = $request->input('encryptedData');
+        $decryptedData = $wechatService->userInfo($code, $iv, $encryptedData);
+
+        if (!$decryptedData) {
             return $this->error([], 'code错误');
         }
 
@@ -46,7 +49,8 @@ class UserController extends ApiController
             'tel' => $request->tel,
             'password' => bcrypt($request->password),
             'name' => '',
-            'open_id' => $open_id,
+            'open_id' => $decryptedData['openId'],
+            'union_id' => $decryptedData['unionId'],
         ]);
 
         //删除原来的验证码
@@ -125,10 +129,10 @@ class UserController extends ApiController
     public function verifyCode(VerifyCodeRequest $request)
     {
         $type = $request->input('type');
-        if($type == 1){
-            $user = User::query()->where('tel',$request->tel)->first();
-            if($user){
-                return $this->error([],'该手机已经注册，请重新填写');
+        if ($type == 1) {
+            $user = User::query()->where('tel', $request->tel)->first();
+            if ($user) {
+                return $this->error([], '该手机已经注册，请重新填写');
             }
         }
 

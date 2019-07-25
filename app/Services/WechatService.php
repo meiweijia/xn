@@ -49,19 +49,40 @@ class WechatService
     }
 
     /**
-     * 获取小程序用户的 openId
-     *
      * @param $code
-     * @return array|\EasyWeChat\Kernel\Support\Collection|object|\Psr\Http\Message\ResponseInterface|string
+     * @param $iv
+     * @param $encryptedData
+     *
+     * @return mixed
+     * @throws \EasyWeChat\Kernel\Exceptions\DecryptException
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
      */
-    public function openid($code)
+    public function userInfo($code, $iv, $encryptedData)
+    {
+        $app = EasyWechat::miniProgram();
+        $info = self::authInfo($code);
+        if (!$info) {
+            return false;
+        }
+        $session = $info['session_key'];
+        $decryptedData = $app->encryptor->decryptData($session, $iv, $encryptedData);
+        Log::info('wechat_auth_decrypted_data', $decryptedData);
+        return $decryptedData;
+    }
+
+    /**
+     * @param $code
+     *
+     * @return array|bool|\EasyWeChat\Kernel\Support\Collection|object|\Psr\Http\Message\ResponseInterface|string
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     */
+    public function authInfo($code)
     {
         $app = EasyWechat::miniProgram();
         $result = $app->auth->session($code);
         if (array_key_exists('errcode', $result)) {
             return false;
         }
-        return $result['openid'];
+        return $result;
     }
 }
