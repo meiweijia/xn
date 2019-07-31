@@ -50,7 +50,7 @@ class UserController extends ApiController
             'password' => bcrypt($request->password),
             'name' => '',
             'open_id' => $decryptedData['openId'],
-            'union_id' => $decryptedData['unionId'],
+            //'union_id' => $decryptedData['unionId'],
         ]);
 
         //删除原来的验证码
