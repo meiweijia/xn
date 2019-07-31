@@ -86,7 +86,7 @@ class UserController extends Controller
         $grid->tel('电话');
         $grid->avatar('头像')->image();
         $grid->type('Type')->display(function ($value) {
-            return $value == 1 ? '员工' : '租户';
+            return $value == 1 ? '租户' : '员工';
         });
         $grid->roles('角色')->display(function ($roles) {
             $roles = array_map(function ($role) {
