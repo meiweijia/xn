@@ -84,7 +84,7 @@ class UserController extends Controller
         $grid->id('Id');
         $grid->name('姓名');
         $grid->tel('电话');
-        $grid->avatar('头像')->image();
+        //$grid->avatar('头像')->image();
         $grid->type('Type')->display(function ($value) {
             return $value == 1 ? '租户' : '员工';
         });
@@ -145,7 +145,7 @@ class UserController extends Controller
         $form->password('password', '密码')->default(function ($form) {
             return $form->model()->password;
         });
-        //$form->image('avatar', '头像');
+        $form->image('avatar', '头像');
         $form->select('type', '类型')->options([
             1 => '租户',
             2 => '员工'
