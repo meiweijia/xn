@@ -353,6 +353,11 @@ return [
     'extensions' => [
         'config'=>[
             'controller'=>'App\Admin\Controllers\ConfigController'
-        ]
+        ],
+        'media-manager' => [
+
+            // Select a local disk that you configured in `config/filesystem.php`
+            'disk' => 'public'
+        ],
     ],
 ];
