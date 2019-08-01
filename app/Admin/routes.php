@@ -22,4 +22,6 @@ Route::group([
     $router->resource('roles', 'RoleController')->names('admin.roles');
     $router->resource('permissions', 'PermissionController')->names('admin.permissions');
 
+    $router->get('send_tmp_smg', 'RentLogController@sendTmpMsg')->name('admin.send_tmp_msg');
+
 });

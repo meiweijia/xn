@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Extensions\Grid\Tools\SendTmpMsg;
 use App\Admin\Extensions\RentLogExporter;
 use App\Models\Region;
 use App\Models\RentLog;
@@ -112,6 +113,10 @@ class RentLogController extends Controller
         });
 
         $grid->exporter(new RentLogExporter());
+
+        $grid->tools(function (Grid\Tools $tools) {
+            $tools->append(new SendTmpMsg());
+        });
 
         return $grid;
     }

@@ -69,7 +69,7 @@ Route::resource('borrows', 'BorrowController')->only(['index', 'store', 'show',]
 Route::resource('supports', 'SupportController')->only(['index', 'store', 'show',])->names('api.supports');
 Route::resource('house_out_cleans', 'HouseOutCleanController')->only(['index', 'store', 'show',])->names('api.house_out_cleans');
 Route::resource('public_area_cleans', 'PublicAreaCleanController')->only(['index', 'store', 'show',])->names('api.public_area_cleans');
-Route::resource('articles', 'ArticleController')->only(['index', 'store', 'show',])->names('api.articles');
+Route::resource('articles', 'ArticleController')->only(['index', 'store', 'show','destroy',])->names('api.articles');
 Route::resource('tasks', 'TaskController')->only(['index', 'store', 'show',])->names('api.tasks');
 Route::resource('appointments', 'AppointmentController')->only(['index', 'store', 'show',])->names('api.appointments');
 

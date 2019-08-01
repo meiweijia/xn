@@ -87,6 +87,7 @@ class CategoryController extends Controller
         $grid->region()->name('地区');
         $grid->name('名称');
         $grid->address('地址');
+        $grid->phone('电话');
         $grid->type('类型')->display(function ($value) {
             return Category::$typeMap[$value];
         });
@@ -134,6 +135,7 @@ class CategoryController extends Controller
         $form->select('region_id', '地区')->options(Region::query()->pluck('name', 'id')->toArray());
         $form->text('name', '名称');
         $form->text('address', '地址');
+        $form->mobile('phone', '电话');
         $form->select('type', '类型')->options(Category::$typeMap);
         $form->multipleSelect('users', '网格员')->options(
             User::role('网格员')->pluck('name', 'id')//每栋楼可以设置网格员

@@ -16,4 +16,9 @@ class ArticleController extends ApiController
         ]));
         return $this->success($result);
     }
+
+    public function destroy(Article $article)
+    {
+        return $this->success($article->delete());
+    }
 }
