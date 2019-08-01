@@ -145,7 +145,7 @@ class UserController extends Controller
         $form->password('password', '密码')->default(function ($form) {
             return $form->model()->password;
         });
-        $form->image('avatar', '头像');
+        //$form->image('avatar', '头像');
         $form->select('type', '类型')->options([
             1 => '租户',
             2 => '员工'
