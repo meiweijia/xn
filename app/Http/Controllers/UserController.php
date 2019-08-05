@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VerifyCodeRequest;
+use App\Models\Borrow;
 use App\Models\House;
+use App\Models\HouseOutClean;
 use App\Models\Layout;
 use App\Models\Order;
+use App\Models\Post;
+use App\Models\PublicArea;
+use App\Models\PublicAreaClean;
 use App\Models\RentLog;
+use App\Models\Repair;
+use App\Models\Support;
 use App\Services\WechatService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -178,7 +185,7 @@ class UserController extends ApiController
     {
         $result['data'] = [];
         $result['role'] = Auth::user()->getRoleNames();
-        if (Auth::user()->hasRole('guest')) {
+        if (Auth::user()->hasRole('游客')) {
             $pending = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_PENDING)->count();
             $processing = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_PROCESSING)->count();
             $success = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_SUCCESS)->count();
@@ -188,6 +195,26 @@ class UserController extends ApiController
                 'processing' => $processing,
                 'success' => $success,
                 'failed' => $failed,
+            ];
+        }
+
+        if (Auth::user()->hasAnyRole(['员工', '管理'])) {
+            $post = Post::query()->where('approve', 0)->count();
+            $repair = Repair::query()->where('approve', 0)->count();
+            $public_area = PublicArea::query()->where('approve', 0)->count();
+            $borrow = Borrow::query()->where('approve', 0)->count();
+            $support = Support::query()->where('approve', 0)->count();
+            $house_out_clean = HouseOutClean::query()->where('approve', 0)->count();
+            $public_area_clean = PublicAreaClean::query()->where('approve', 0)->count();
+
+            $result['data'] = [
+                'post' => $post,
+                'repair' => $repair,
+                'public_area' => $public_area,
+                'borrow' => $borrow,
+                'support' => $support,
+                'house_out_clean' => $house_out_clean,
+                'public_area_clean' => $public_area_clean,
             ];
         }
 
