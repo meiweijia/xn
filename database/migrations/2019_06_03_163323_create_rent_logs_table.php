@@ -18,6 +18,8 @@ class CreateRentLogsTable extends Migration
             //$table->unsignedBigInteger('property_id')->default(0)->comment('物业ID');
             //$table->foreign('property_id')->references('id')->on('properties');;
             $table->string('property')->default('')->comment('物业名');
+            $table->unsignedInteger('region_id')->comment('房间');
+            $table->unsignedInteger('category_id')->comment('房间');
             $table->unsignedInteger('house_id')->comment('房间');
             $table->unsignedInteger('house_number')->default(0)->comment('房间编号');
             $table->unsignedInteger('house_rent')->default(0)->comment('租金');

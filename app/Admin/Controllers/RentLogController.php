@@ -2,81 +2,26 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Extensions\Form\Form;
 use App\Admin\Extensions\Grid\Tools\SendTmpMsg;
 use App\Admin\Extensions\RentLogExporter;
 use App\Models\Region;
 use App\Models\RentLog;
 use App\Http\Controllers\Controller;
+use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Controllers\HasResourceActions;
-use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class RentLogController extends Controller
+class RentLogController extends AdminController
 {
-    use HasResourceActions;
-
     /**
-     * Index interface.
+     * Title for current resource.
      *
-     * @param Content $content
-     *
-     * @return Content
+     * @var string
      */
-    public function index(Content $content)
-    {
-        return $content
-            ->header('水电费结算')
-            ->description('列表')
-            ->body($this->grid());
-    }
-
-    /**
-     * Show interface.
-     *
-     * @param mixed $id
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function show($id, Content $content)
-    {
-        return $content
-            ->header('Detail')
-            ->description('description')
-            ->body($this->detail($id));
-    }
-
-    /**
-     * Edit interface.
-     *
-     * @param mixed $id
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function edit($id, Content $content)
-    {
-        return $content
-            ->header('Edit')
-            ->description('description')
-            ->body($this->form()->edit($id));
-    }
-
-    /**
-     * Create interface.
-     *
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function create(Content $content)
-    {
-        return $content
-            ->header('水电费结算')
-            ->body($this->form());
-    }
+    protected $title = '水电费';
 
     /**
      * Make a grid builder.
@@ -162,15 +107,14 @@ class RentLogController extends Controller
     protected function form()
     {
         $form = new Form(new RentLog);
-        $form->ignore(['region', 'category', 'layout']);//忽略的字段
 
-        $form->select('region', '区域')
+        $form->select('region_id', '区域')
             ->options(Region::query()->pluck('name', 'id'))
-            ->load('category', '/api/admin_api/categories', 'id', 'name');
-        $form->select('category', '楼栋')
-            ->load('layout', '/api/admin_api/layouts', 'id', 'name');
-        $form->select('layout', '户型')
+            ->load('category_id', '/api/admin_api/categories', 'id', 'name');
+
+        $form->select('category_id', '楼栋')
             ->load('house_id', '/api/admin_api/houses', 'id', 'number');
+
         $form->select('house_id', '房号');
 
         $form->decimal('last_electric_number', '上月电表(度)');

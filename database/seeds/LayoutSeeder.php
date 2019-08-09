@@ -11,6 +11,6 @@ class LayoutSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\Layout::class, 4)->create();
+        factory(\App\Models\Layout::class, 100)->create();
     }
 }

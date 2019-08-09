@@ -12,7 +12,6 @@ $factory->define(Category::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'region_id' => $region->id,
-        'address' => $faker->address,
         'type' => $faker->numberBetween(1, 3),
     ];
 });

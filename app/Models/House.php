@@ -18,6 +18,24 @@ class House extends Model
         'status' => 'boolean',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        // 监听模型创建事件，在写入数据库之前触发
+        static::creating(function ($model) {
+            // 如果模型的 category_id 字段为空
+            if (!$model->category_id) {
+                $category_id = Layout::query()->where('id', $model->layout_id)->value('category_id');
+                $model->category_id = $category_id;
+            }
+
+            if (!$model->rent) {
+                $rent = Layout::query()->where('id', $model->layout_id)->value('rent');
+                $model->rent = $rent;
+            }
+        });
+    }
+
     public function layout()
     {
         return $this->belongsTo(Layout::class);

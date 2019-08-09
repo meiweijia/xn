@@ -30,6 +30,11 @@ class Category extends Model
         return $this->hasMany(Layout::class);
     }
 
+    public function houses()
+    {
+        return $this->hasMany(House::class);
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class);

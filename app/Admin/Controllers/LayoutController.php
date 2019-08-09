@@ -5,73 +5,22 @@ namespace App\Admin\Controllers;
 use App\Models\Category;
 use App\Models\Layout;
 use App\Http\Controllers\Controller;
+use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
+use Illuminate\Support\MessageBag;
 
-class LayoutController extends Controller
+class LayoutController extends AdminController
 {
-    use HasResourceActions;
-
     /**
-     * Index interface.
+     * Title for current resource.
      *
-     * @param Content $content
-     *
-     * @return Content
+     * @var string
      */
-    public function index(Content $content)
-    {
-        return $content
-            ->header('户型列表')
-            ->body($this->grid());
-    }
-
-    /**
-     * Show interface.
-     *
-     * @param mixed $id
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function show($id, Content $content)
-    {
-        return $content
-            ->header('户型详情')
-            ->body($this->detail($id));
-    }
-
-    /**
-     * Edit interface.
-     *
-     * @param mixed $id
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function edit($id, Content $content)
-    {
-        return $content
-            ->header('户型编辑')
-            ->body($this->form()->edit($id));
-    }
-
-    /**
-     * Create interface.
-     *
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function create(Content $content)
-    {
-        return $content
-            ->header('新增')
-            ->body($this->form());
-    }
+    protected $title = '户型';
 
     /**
      * Make a grid builder.
@@ -151,6 +100,20 @@ class LayoutController extends Controller
             ])->rules('required|numeric');
         });
 
+        // 抛出成功信息
+        $form->saved(function ($form) {
+            $url = route('admin.categories.show',$form->category_id);
+            return redirect($url);
+        });
+
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableDelete();
+            $tools->disableView();
+            $tools->disableList();
+        });
+        $form->disableCreatingCheck();
+        $form->disableViewCheck();
+        $form->disableEditingCheck();
         return $form;
     }
 }

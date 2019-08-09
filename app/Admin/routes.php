@@ -16,6 +16,7 @@ Route::group([
     $router->resource('regions', 'RegionController')->names('admin.regions');
     $router->resource('categories', 'CategoryController')->names('admin.categories');
     $router->resource('layouts', 'LayoutController')->names('admin.layouts');
+    $router->resource('houses', 'HouseController')->names('admin.houses');
     $router->resource('banners', 'BannerController')->names('admin.banners');
 
     $router->resource('users', 'UserController')->names('admin.users');

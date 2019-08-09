@@ -48,17 +48,15 @@ class ApiController extends Controller
         if ($this->model instanceof Category) {
             $par = 'region_id';
         }
-        if ($this->model instanceof Layout) {
+        if ($this->model instanceof House) {
             $par = 'category_id';
         }
-        if ($this->model instanceof House) {
-            $par = 'layout_id';
-        }
         $q = $request->input('q');//后台 select 联动需要
+        if (!$q || !$par) {
+            return [];
+        }
         return $this->model
-            ->when($q && $par, function ($query) use ($q, $par) {
-                $query->where($par, $q);
-            })
+            ->where($par, $q)
             ->get();
     }
 
