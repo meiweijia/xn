@@ -39,7 +39,11 @@ SCRIPT;
         <i class="fa fa-plus"></i><span class="hidden-xs">&nbsp;&nbsp;发送</span>
     </a>
 </div>
-
+<script>
+function sendRentLog(){
+    $.post();
+}
+</script>
 EOT;
     }
 }

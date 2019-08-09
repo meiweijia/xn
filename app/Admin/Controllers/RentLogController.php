@@ -13,6 +13,7 @@ use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
+use Overtrue\LaravelWeChat\Facade as Wechat;
 
 class RentLogController extends AdminController
 {
@@ -58,7 +59,8 @@ class RentLogController extends AdminController
         });
 
         $grid->exporter(new RentLogExporter());
-
+        $grid->disableFilter();
+        $grid->disableColumnSelector();
         $grid->tools(function (Grid\Tools $tools) {
             $tools->append(new SendTmpMsg());
         });
@@ -131,5 +133,11 @@ class RentLogController extends AdminController
         ]);
         $form->decimal('other_cost', '其他费用');
         return $form;
+    }
+
+    public function sendTmpMsg(){
+        $app = Wechat::officialAccount();
+        $a = $app->template_message->getPrivateTemplates();
+        dd($a);
     }
 }
