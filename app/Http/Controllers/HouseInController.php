@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\House;
 use App\Models\HouseIn;
 use Illuminate\Http\Request;
 
@@ -32,6 +33,20 @@ class HouseInController extends ApiController
             'cold_water_number',//冷水表度数
             'hot_water_number',//热水表度数
         ]));
+        return $this->success($result);
+    }
+
+    protected function approve(Request $request, $id)
+    {
+        $approve = $request->input('approve');
+        $in = HouseIn::query()->find($id);
+        $in->approve = $approve;
+        $result = $in->save();
+        if ($approve == 1) {
+            House::query()->where('id', $in->house_id)->update([
+                'user_id' => $in->user_id
+            ]);
+        }
         return $this->success($result);
     }
 }
