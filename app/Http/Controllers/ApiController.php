@@ -37,6 +37,7 @@ class ApiController extends Controller
             ->when($approve, function ($query, $approve) {
                 $query->where('approve', $approve);
             })
+            ->orderByDesc('created_at')
             ->paginate(20);
         return $this->success($result);
     }
