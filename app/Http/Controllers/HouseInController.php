@@ -18,6 +18,7 @@ class HouseInController extends ApiController
     {
         $result = HouseIn::query()->create($request->only([
             'house_id',
+            'user_id',//住户
             'rent',//租金
             'deposit',//押金
             'start_time',//起租日期
