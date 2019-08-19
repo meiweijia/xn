@@ -71,7 +71,7 @@ Route::resource('house_out_cleans', 'HouseOutCleanController')->only(['index', '
 Route::resource('public_area_cleans', 'PublicAreaCleanController')->only(['index', 'store', 'show',])->names('api.public_area_cleans');
 Route::resource('articles', 'ArticleController')->only(['index', 'store', 'show','destroy',])->names('api.articles');
 Route::resource('tasks', 'TaskController')->only(['index', 'store', 'show',])->names('api.tasks');
-Route::resource('appointments', 'AppointmentController')->only(['index', 'store', 'show','delete'])->names('api.appointments');
+Route::resource('appointments', 'AppointmentController')->only(['index', 'store', 'show','destroy'])->names('api.appointments');
 
 
 //审批
