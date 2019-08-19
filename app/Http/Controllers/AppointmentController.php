@@ -32,4 +32,9 @@ class AppointmentController extends ApiController
 
         return $this->success($result);
     }
+
+    public function destroy(Appointment $appointment)
+    {
+        return $this->success($appointment->delete(),'删除成功！');
+    }
 }
