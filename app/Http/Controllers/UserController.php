@@ -186,9 +186,12 @@ class UserController extends ApiController
         $result['data'] = [];
         $result['role'] = Auth::user()->getRoleNames();
         if (Auth::user()->hasRole('游客')) {
-            $pending = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_PENDING)->count();
-            $processing = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_PROCESSING)->count();
-            $success = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_SUCCESS)->count();
+            $pending = Order::query()->where('user_id', Auth::id())->where('status',
+                Order::PAY_STATUS_PENDING)->count();
+            $processing = Order::query()->where('user_id', Auth::id())->where('status',
+                Order::PAY_STATUS_PROCESSING)->count();
+            $success = Order::query()->where('user_id', Auth::id())->where('status',
+                Order::PAY_STATUS_SUCCESS)->count();
             $failed = Order::query()->where('user_id', Auth::id())->where('status', Order::PAY_STATUS_FAILED)->count();
             $result['data'] = [
                 'pending' => $pending,
@@ -250,8 +253,9 @@ class UserController extends ApiController
                     default:
                         $status = null;
                 }
-                if ($status)
+                if ($status) {
                     $query->where('status', $status);
+                }
             })
             ->get();
         return $this->success($orders);
@@ -263,9 +267,11 @@ class UserController extends ApiController
     public function rentShow()
     {
         $rent = Auth::user()->house()
-            ->with(['rentLog' => function ($query) {
-                $query->whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'));
-            }])
+            ->with([
+                'rentLog' => function ($query) {
+                    $query->whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'));
+                }
+            ])
             ->first();
         $rent->electric_unit_price = config('electric_unit_price');
         $rent->cold_water_unit_price = config('cold_water_unit_price');
@@ -292,7 +298,8 @@ class UserController extends ApiController
         $rent_log->update(['no' => $no]);
         $open_id = $request->user()->open_id;
 
-        $config = $wechatService->order($no, $request->input('amount') * 100, '鑫南支付中心-房租支付', $open_id, route('api.pay.rent_pay_notify'));
+        $config = $wechatService->order($no, $request->input('amount') * 100, '鑫南支付中心-房租支付', $open_id,
+            route('api.pay.rent_pay_notify'));
 
         if (isset($config['err_code_des'])) {
             return $this->error([], $config['err_code_des']);
@@ -363,7 +370,7 @@ class UserController extends ApiController
 
     public function tasks(Request $request, $id)
     {
-        $user = User::query()->find($id);
+        $user = User::query()->where('executor_id', $id)->first();
         $result = $user->tasks()->get();
         return $this->success($result);
     }
