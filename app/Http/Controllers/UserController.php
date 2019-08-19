@@ -371,7 +371,7 @@ class UserController extends ApiController
 
     public function tasks(Request $request, $id)
     {
-        $result = Task::query()->where('executor_id', $id)->get();
+        $result = Task::query()->where('executor_id', $id)->orderByDesc('created_at')->get();
         return $this->success($result);
     }
 }
