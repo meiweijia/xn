@@ -14,6 +14,7 @@ use App\Models\PublicAreaClean;
 use App\Models\RentLog;
 use App\Models\Repair;
 use App\Models\Support;
+use App\Models\Task;
 use App\Services\WechatService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -370,8 +371,7 @@ class UserController extends ApiController
 
     public function tasks(Request $request, $id)
     {
-        $user = User::query()->where('executor_id', $id)->first();
-        $result = $user->tasks()->get();
+        $result = Task::query()->where('executor_id', $id)->get();
         return $this->success($result);
     }
 }
