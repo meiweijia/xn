@@ -32,7 +32,7 @@ class HouseIn extends Model
         parent::boot();
         // 监听模型创建事件，审核通过时，把用户信息和房间关联
         static::updated(function ($model) {
-            if ($model == 1) {
+            if ($model->approve == 1) {
                 House::query()->where('id', $model->house_id)->update([
                     'user_id' => $model->user_id
                 ]);
