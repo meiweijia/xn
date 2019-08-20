@@ -10,11 +10,11 @@ class HouseController extends ApiController
     public function index(Request $request)
     {
         $this->checkPar($request, [
-            'layout_id' => 'required'
+            'category_id' => 'required'
         ]);
-        $layout_id = $request->input('layout_id');
+        $category_id = $request->input('category_id');
         $result = House::query()
-            ->where('layout_id', $layout_id)
+            ->where('category_id', $category_id)
             ->get();
         return $this->success($result);
     }
