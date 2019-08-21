@@ -204,7 +204,7 @@ class UserController extends ApiController
 
         if (Auth::user()->hasRole('租客')) {
             $result['data'] = [
-                'house_id' => Auth::user()->house()->id
+                'house_id' => House::query()->where('user_id', Auth::id())->value('id')
             ];
         }
 
