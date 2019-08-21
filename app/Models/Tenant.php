@@ -10,7 +10,8 @@ class Tenant extends Model
         'name',
         'id_card',
         'id_card_images',
-        'tel'
+        'tel',
+        'house_id'
     ];
 
     protected $casts = [
