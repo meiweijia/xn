@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use EasyWeChat\Kernel\Messages\Text;
 use Illuminate\Http\Request;
 use Overtrue\LaravelWeChat\Facade as EasyWechat;
@@ -20,11 +21,17 @@ class WechatController extends Controller
     public function serve()
     {
         $app = EasyWechat::officialAccount();
-        $app->server->push(function ($message) {
+        $app->server->push(function ($message) use ($app) {
             switch ($message['MsgType']) {
                 case 'event':
                     switch ($message['Event']) {
                         case 'subscribe':
+                            $wechatUser = $app->user->get($message['FromUserName']);
+                            $user = User::query()->where('union_id', $wechatUser['unionid'])->first();
+                            if ($user) {
+                                $user->gzh_open_id = $wechatUser['unionid'];
+                                $user->save();
+                            }
                             return new Text('欢迎关注鑫南服务！');
                             break;
                     }

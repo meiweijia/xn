@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Admin\Extensions\Form\Form;
 use App\Admin\Extensions\Grid\Tools\SendTmpMsg;
 use App\Admin\Extensions\RentLogExporter;
+use App\Models\House;
 use App\Models\Region;
 use App\Models\RentLog;
 use App\Http\Controllers\Controller;
@@ -132,12 +133,40 @@ class RentLogController extends AdminController
             'gte' => '本月热水表必须大于等于上月热水表'
         ]);
         $form->decimal('other_cost', '其他费用');
+
+        $form->saving(function (Form $form) {
+            $house = House::query()->with('user:id,gzh_open_id')->find($form->house_id);
+            $form->model()->user_id = $house->user->id;
+            $form->model()->gzh_open_id = $house->user->gzh_open_id;
+        });
         return $form;
     }
 
-    public function sendTmpMsg(){
+    /**
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     */
+    public function sendTmpMsg()
+    {
+        $rentLogs = RentLog::query()->where('status', 0)->get();
         $app = Wechat::officialAccount();
-        $a = $app->template_message->getPrivateTemplates();
-        dd($a);
+        foreach ($rentLogs as $log) {
+            $app->template_message->send([
+                'touser' => $log->gzh_open_id,
+                'template_id' => '5A2QS6xExcNtQVAUHAWDabdfgAoRL5F-ITFSCRxSKks',
+                'miniprogram' => [
+                    'appid' => config('wechat.default.app_id'),
+                    'pagepath' => 'pages/order/payHouse',
+                ],
+                'data' => [
+                    'first' => date('M') . '月份房租提现！',
+                    'keyword1' => $log['house_rent'],
+                    'keyword2' => $log['other_cost'],
+                    'keyword3' => $log['electric_cost'],
+                    'keyword4' => $log['water_cost'],
+                    'keyword5' => $log['total_cost'],
+                    'remark' => '欢迎使用本系统，有问题请咨询人工！',
+                ],
+            ]);
+        }
     }
 }
