@@ -145,7 +145,7 @@ class RentLogController extends AdminController
     /**
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
      */
-    public function sendTmpMsg()
+    public function sendTmpMsg(): void
     {
         $rentLogs = RentLog::query()->where('status', 0)->get();
         $app = Wechat::officialAccount();
@@ -167,6 +167,8 @@ class RentLogController extends AdminController
                     'remark' => '欢迎使用本系统，有问题请咨询人工！',
                 ],
             ]);
+            $log->status = 1;
+            $log->save();
         }
     }
 }
