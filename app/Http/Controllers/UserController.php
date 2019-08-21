@@ -202,6 +202,12 @@ class UserController extends ApiController
             ];
         }
 
+        if (Auth::user()->hasRole('租客')) {
+            $result['data'] = [
+                'house_id' => Auth::user()->house()->id
+            ];
+        }
+
         if (Auth::user()->hasAnyRole(['员工', '管理'])) {
             $post = Post::query()->where('approve', 0)->count();
             $repair = Repair::query()->where('approve', 0)->count();
