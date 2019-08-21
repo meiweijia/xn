@@ -44,7 +44,8 @@ class HouseInController extends ApiController
         $result = $in->save();
         if ($approve == 1) {
             House::query()->where('id', $in->house_id)->update([
-                'user_id' => $in->user_id
+                'user_id' => $in->user_id,
+                'status' => 0
             ]);
         }
         return $this->success($result);

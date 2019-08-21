@@ -93,7 +93,7 @@ Route::post('tasks/{id}/approve', 'TaskController@approve')->name('api.tasks.app
 
 //后台 SELECT 接口
 Route::name('api.admin_api.')->prefix('admin_api')->group(function () {
-    Route::get('regions', 'RegionController@indexAdmin')->name('regions');//区域
-    Route::get('categories', 'CategoryController@indexAdmin')->name('categories');//区域
-    Route::get('houses', 'HouseController@indexAdmin')->name('houses');//区域
+    Route::get('regions', 'RegionController@indexAdmin')->name('admin_api_regions');//区域
+    Route::get('categories', 'CategoryController@indexAdmin')->name('admin_api_categories');//区域
+    Route::get('houses', 'HouseController@indexAdmin')->name('admin_api_houses');//区域
 });

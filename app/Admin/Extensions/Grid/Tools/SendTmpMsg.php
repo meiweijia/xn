@@ -24,7 +24,7 @@ class SendTmpMsg extends AbstractTool
 </div>
 <script>
 function sendRentLog(){
-    $.get( "/admin.send_tmp_smg", function( data ) {
+    $.get( "/admin/send_tmp_smg", function( data ) {
         console.log(data);
         alert( "发送成功" );
     });

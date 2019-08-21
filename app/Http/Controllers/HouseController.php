@@ -23,4 +23,13 @@ class HouseController extends ApiController
     {
         return $this->success($house->tenants()->get());
     }
+
+    public function indexAdmin(Request $request)
+    {
+        $q = $request->input('q');//后台 select 联动需要
+        return House::query()
+            ->where('category_id', $q)
+            ->where('status', 0)
+            ->get();
+    }
 }

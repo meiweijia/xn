@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\House;
 use App\Models\HouseOut;
 use Illuminate\Http\Request;
 
@@ -42,6 +43,21 @@ class HouseOutController extends ApiController
                 'end_time',
                 'leave_time',
             ]));
+        return $this->success($result);
+    }
+
+    protected function approve(Request $request, $id)
+    {
+        $approve = $request->input('approve');
+        $in = HouseOut::query()->find($id);
+        $in->approve = $approve;
+        $result = $in->save();
+        if ($approve == 1) {
+            House::query()->where('id', $in->house_id)->update([
+                'user_id' => null,
+                'status' => 1
+            ]);
+        }
         return $this->success($result);
     }
 }
