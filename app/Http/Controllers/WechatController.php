@@ -29,7 +29,7 @@ class WechatController extends Controller
                             $wechatUser = $app->user->get($message['FromUserName']);
                             $user = User::query()->where('union_id', $wechatUser['unionid'])->first();
                             if ($user) {
-                                $user->gzh_open_id = $wechatUser['unionid'];
+                                $user->gzh_open_id = $message['FromUserName'];
                                 $user->save();
                             }
                             return new Text('欢迎关注鑫南服务！');
