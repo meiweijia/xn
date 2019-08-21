@@ -158,7 +158,7 @@ class RentLogController extends AdminController
                     'pagepath' => 'pages/order/payHouse',
                 ],
                 'data' => [
-                    'first' => date('M') . '月份房租提现！',
+                    'first' => date('m') . '月份房租提醒！',
                     'keyword1' => $log['house_rent'],
                     'keyword2' => $log['other_cost'],
                     'keyword3' => $log['electric_cost'],

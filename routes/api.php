@@ -72,7 +72,7 @@ Route::resource('public_area_cleans', 'PublicAreaCleanController')->only(['index
 Route::resource('articles', 'ArticleController')->only(['index', 'store', 'show','destroy',])->names('api.articles');
 Route::resource('tasks', 'TaskController')->only(['index', 'store', 'show',])->names('api.tasks');
 Route::resource('appointments', 'AppointmentController')->only(['index', 'store', 'show','destroy'])->names('api.appointments');
-
+Route::resource('tenants', 'TenantController')->only(['store'])->names('api.tenants');
 
 //审批
 Route::post('house_ins/{id}/approve', 'HouseInController@approve')->name('api.house_ins.approve');
