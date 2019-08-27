@@ -70,10 +70,10 @@ class ApiController extends Controller
     protected function approve(Request $request, $id)
     {
         $approve = $request->input('approve');
-        $model = $this->getInstance($request);
-        $result = $model->where('id', $id)->update([
-            'approve' => $approve
-        ]);
+        $instance = $this->getInstance($request);
+        $model = $instance->find($id);
+        $model->approve = $approve;
+        $result = $model->save();
         return $this->success($result);
     }
 

@@ -35,19 +35,4 @@ class HouseInController extends ApiController
         ]));
         return $this->success($result);
     }
-
-    protected function approve(Request $request, $id)
-    {
-        $approve = $request->input('approve');
-        $in = HouseIn::query()->find($id);
-        $in->approve = $approve;
-        $result = $in->save();
-        if ($approve == 1) {
-            House::query()->where('id', $in->house_id)->update([
-                'user_id' => $in->user_id,
-                'status' => 0
-            ]);
-        }
-        return $this->success($result);
-    }
 }

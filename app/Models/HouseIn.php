@@ -34,11 +34,12 @@ class HouseIn extends Model
         static::updated(function ($model) {
             if ($model->approve == 1) {
                 House::query()->where('id', $model->house_id)->update([
-                    'user_id' => $model->user_id
+                    'user_id' => $model->user_id,
+                    'status' => 0
                 ]);
                 //注册成功 给予 guest 权限
                 $user = User::query()->find($model->user_id);
-                $user->assignRole('租客');
+                $user->syncRoles('租客');
             }
         });
     }
