@@ -13,6 +13,7 @@ class CategoryController extends ApiController
         $type = $request->input('type');
         $q = $request->input('q');//后台 select 联动需要
         $result = Category::query()
+            ->with('region')
             ->when($type, function ($query) use ($type) {
                 $query->where('type', $type);
             })
