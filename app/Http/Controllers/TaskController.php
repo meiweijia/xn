@@ -3,13 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends ApiController
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->only('store');
+        $this->middleware('auth:api')->only('index', 'store');
+    }
+
+    public function index(Request $request)
+    {
+        $result = Task::query()
+            ->when(Auth::user()->hasRole('员工'), function ($query) {
+                $query->where('executor_id', Auth::id());
+            })
+            ->orderByDesc('created_at')
+            ->paginate(20);
+        return $this->success($result);
     }
 
     public function store(Request $request)
