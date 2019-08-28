@@ -71,7 +71,7 @@ Route::resource('house_out_cleans', 'HouseOutCleanController')->only(['index', '
 Route::resource('public_area_cleans', 'PublicAreaCleanController')->only(['index', 'store', 'show',])->names('api.public_area_cleans');
 Route::resource('articles', 'ArticleController')->only(['index', 'store', 'show','destroy',])->names('api.articles');
 Route::resource('tasks', 'TaskController')->only(['index', 'store', 'show',])->names('api.tasks');
-Route::post('tasks','TaskController@finished')->name('api.tasks.finished');//完成任务
+Route::post('tasks/{id}/finished','TaskController@finished')->name('api.tasks.finished');//完成任务
 Route::resource('appointments', 'AppointmentController')->only(['index', 'store', 'show','destroy'])->names('api.appointments');
 Route::resource('tenants', 'TenantController')->only(['store'])->names('api.tenants');
 
