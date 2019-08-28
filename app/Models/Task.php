@@ -8,6 +8,7 @@ class Task extends Model
 {
     protected $casts = [
         'images' => 'array',
+        'receipt_images' => 'array'
     ];
 
     protected $fillable = [
@@ -16,5 +17,7 @@ class Task extends Model
         'title',//任务
         'detail',//详细说明
         'images',//图片
+        'receipt_detail',//完成任务说明
+        'receipt_images',//完成任务图片
     ];
 }

@@ -19,7 +19,18 @@ class TaskController extends ApiController
             'title',//任务
             'detail',//详细说明
             'images',//图片
+            'receipt_detail',//
+            'receipt_images',//
         ]));
+        return $this->success($result);
+    }
+
+    public function finished(Request $request, $id)
+    {
+        $result = Task::query()->where('id', $id)->update([
+            'receipt_detail' => $request->input('receipt_detail'),
+            'receipt_images' => $request->input('receipt_images'),
+        ]);
         return $this->success($result);
     }
 }
