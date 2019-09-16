@@ -216,6 +216,7 @@ class UserController extends ApiController
             $support = Support::query()->where('approve', 0)->count();
             $house_out_clean = HouseOutClean::query()->where('approve', 0)->count();
             $public_area_clean = PublicAreaClean::query()->where('approve', 0)->count();
+            $task = Task::query()->where('approve', 0)->count();
 
             $result['data'] = [
                 'post' => $post,
@@ -225,6 +226,7 @@ class UserController extends ApiController
                 'support' => $support,
                 'house_out_clean' => $house_out_clean,
                 'public_area_clean' => $public_area_clean,
+                'task' => $task,
             ];
         }
 
