@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VerifyCodeRequest;
+use App\Models\Appointment;
+use App\Models\Article;
 use App\Models\Borrow;
 use App\Models\House;
+use App\Models\HouseIn;
+use App\Models\HouseOut;
 use App\Models\HouseOutClean;
 use App\Models\Layout;
 use App\Models\Order;
@@ -15,6 +19,7 @@ use App\Models\RentLog;
 use App\Models\Repair;
 use App\Models\Support;
 use App\Models\Task;
+use App\Models\Visit;
 use App\Services\WechatService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -216,7 +221,12 @@ class UserController extends ApiController
             $support = Support::query()->where('approve', 0)->count();
             $house_out_clean = HouseOutClean::query()->where('approve', 0)->count();
             $public_area_clean = PublicAreaClean::query()->where('approve', 0)->count();
-            $task = Task::query()->where('approve', 0)->count();
+            $task = Task::query()->where('approve', 0)->count();//任务列表
+            $appointment = Appointment::query()->where('approve', 0)->count();//预约列表
+            $visit = Visit::query()->where('approve', 0)->count();//访客列表
+            $house_in = HouseIn::query()->where('approve', 0)->count();//入住申请
+            $house_out = HouseOut::query()->where('approve', 0)->count();//退房申请
+            $article = Article::query()->where('approve',0)->count();//资讯
 
             $result['data'] = [
                 'post' => $post,
@@ -227,6 +237,11 @@ class UserController extends ApiController
                 'house_out_clean' => $house_out_clean,
                 'public_area_clean' => $public_area_clean,
                 'task' => $task,
+                'appointment' => $appointment,
+                'visit' => $visit,
+                'house_in' => $house_in,
+                'house_out' => $house_out,
+                'article' => $article,
             ];
         }
 
