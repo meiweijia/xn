@@ -14,4 +14,9 @@ class Visit extends Model
         'intention',//意向程度 1高 2中 3低
         'remark',//其他原因
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
