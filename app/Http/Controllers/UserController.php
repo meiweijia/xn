@@ -221,12 +221,17 @@ class UserController extends ApiController
             $support = Support::query()->where('approve', 0)->count();
             $house_out_clean = HouseOutClean::query()->where('approve', 0)->count();
             $public_area_clean = PublicAreaClean::query()->where('approve', 0)->count();
-            $task = Task::query()->where('approve', 0)->count();//任务列表
             //$appointment = Appointment::query()->where('approve', 0)->count();//预约列表
             $visit = Visit::query()->where('approve', 0)->count();//访客列表
             $house_in = HouseIn::query()->where('approve', 0)->count();//入住申请
             $house_out = HouseOut::query()->where('approve', 0)->count();//退房申请
-            $article = Article::query()->where('approve',0)->count();//资讯
+            $article = Article::query()->where('approve', 0)->count();//资讯
+
+            if (Auth::user()->hasRole('员工')) {
+                $task = Task::query()->whereIn('approve', [0, 3])->count();//任务列表
+            } else {
+                $task = Task::query()->where('approve', 1)->count();//任务列表
+            }
 
             $result['data'] = [
                 'post' => $post,
