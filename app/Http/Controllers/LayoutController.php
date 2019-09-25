@@ -14,6 +14,7 @@ class LayoutController extends ApiController
         ]);
         $category_id = $request->input('category_id');
         $result = Layout::query()
+            ->with('category.region')
             ->where('category_id', $category_id)
             ->get();
         return $this->success($result);
