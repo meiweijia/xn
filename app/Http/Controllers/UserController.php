@@ -228,7 +228,7 @@ class UserController extends ApiController
             $article = Article::query()->where('approve', 0)->count();//资讯
 
             if (Auth::user()->hasRole('员工')) {
-                $task = Task::query()->whereIn('approve', [0, 3])->count();//任务列表
+                $task = Task::query()->where('executor_id', Auth::id())->whereIn('approve', [0, 3])->count();//任务列表
             } else {
                 $task = Task::query()->where('approve', 1)->count();//任务列表
             }
