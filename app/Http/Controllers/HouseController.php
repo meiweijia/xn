@@ -13,8 +13,12 @@ class HouseController extends ApiController
             'category_id' => 'required'
         ]);
         $category_id = $request->input('category_id');
+        $layout_id = $request->input('layout_id');
         $result = House::query()
             ->where('category_id', $category_id)
+            ->when($layout_id, function ($query) use ($layout_id) {
+                $query->where('layout_id', $layout_id);
+            })
             ->get();
         return $this->success($result);
     }
