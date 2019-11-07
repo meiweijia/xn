@@ -36,6 +36,11 @@ class House extends Model
         });
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function layout()
     {
         return $this->belongsTo(Layout::class);
