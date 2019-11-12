@@ -10,7 +10,7 @@ class HouseOutCleanController extends ApiController
 
     public function index(Request $request)
     {
-        $this->setWith('house.category');
+        $this->setWith(['house.category','house.layout']);
         return parent::index($request);
     }
 

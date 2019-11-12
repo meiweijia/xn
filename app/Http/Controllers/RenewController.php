@@ -10,7 +10,7 @@ class RenewController extends ApiController
 
     public function index(Request $request)
     {
-        $this->setWith(['house.category','user']);
+        $this->setWith(['house.category','house.layout','user']);
         return parent::index($request);
     }
 
