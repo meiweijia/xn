@@ -14,7 +14,7 @@ class SupportController extends ApiController
 
     public function index(Request $request)
     {
-        $this->setWith('category');
+        $this->setWith(['category','user']);
         return parent::index($request);
     }
 
