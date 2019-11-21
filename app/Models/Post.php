@@ -13,4 +13,8 @@ class Post extends Model
         'leave_date',//'休假日期
         'detail',//'详细说明
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

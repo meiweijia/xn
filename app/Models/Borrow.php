@@ -16,4 +16,8 @@ class Borrow extends Model
         'date',//归还日期'
         'images',//物品图片
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
