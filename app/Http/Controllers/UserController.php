@@ -377,7 +377,12 @@ class UserController extends ApiController
         $this->checkPar($request, [
             'type' => 'required',
         ]);
-        $result = User::query()->where('type', $request->input('type'))
+        $task_users = Task::query()->where('approve', 1)->pluck('executor_id');//有任务的用户
+        $result = User::query()
+            ->where('type', $request->input('type'))
+            ->when($task_users, function ($query) use ($task_users) {
+                $query->whereIn('id', $task_users);
+            })
             ->get();
         return $this->success($result);
     }
