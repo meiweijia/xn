@@ -19,4 +19,8 @@ class JobLog extends Model
         'daily_summary',//总结
         'detail',//详细描述
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

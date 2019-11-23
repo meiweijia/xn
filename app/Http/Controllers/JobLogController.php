@@ -12,6 +12,12 @@ class JobLogController extends ApiController
         $this->middleware('auth:api')->only('store');
     }
 
+    public function index(Request $request)
+    {
+        $this->setWith('user');
+        return parent::index($request);
+    }
+
     public function store(Request $request)
     {
         $result = $request->user()->job_logs()->create($request->only([
