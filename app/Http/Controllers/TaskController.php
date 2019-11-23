@@ -16,24 +16,12 @@ class TaskController extends ApiController
 
     public function index(Request $request)
     {
-        if (Auth::user()->hasRole('员工')) {//员工查自己的
-            $result = Task::query()
-                ->where('executor_id', Auth::id())
-                ->orderByDesc('created_at')
-                ->paginate(20);
-        } else {//管理查询有小数字的，如果没有就查所有的
-            $result = Task::query()
-                ->orderByDesc('created_at')
-                ->where('approve', 1)
-                ->paginate(20);
-
-            if (!$result) {
-                $result = Task::query()
-                    ->orderByDesc('created_at')
-                    ->paginate(20);
-            }
-        }
-
+        $result = Task::query()
+            ->when(Auth::user()->hasRole('员工'), function ($query) {
+                $query->where('executor_id', Auth::id());
+            })
+            ->orderByDesc('created_at')
+            ->paginate(20);
         return $this->success($result);
     }
 
