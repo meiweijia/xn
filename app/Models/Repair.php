@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Repair extends Model
 {
@@ -20,12 +21,23 @@ class Repair extends Model
         'images',//图片
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        // 监听模型创建事件，在写入数据库之前触发
+        static::creating(function ($model) {
+            $house = House::query()->where('user_id', Auth::id())->first();
+            $model->house_id = $house->id;
+        });
+    }
+
     public function house()
     {
         return $this->belongsTo(House::class);
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }
