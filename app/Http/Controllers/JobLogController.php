@@ -31,4 +31,10 @@ class JobLogController extends ApiController
         ]));
         return $this->success($result);
     }
+
+    public function destroy(JobLog $jobLog)
+    {
+        $jobLog->delete();
+        return $this->success([]);
+    }
 }

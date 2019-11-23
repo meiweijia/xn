@@ -58,7 +58,7 @@ Route::any('/pay/rent_pay_notify', 'PayController@rentPayNotify')->name('api.pay
 Route::resource('house_ins', 'HouseInController')->only(['index', 'store', 'show',])->names('api.house_ins');
 Route::resource('house_outs', 'HouseOutController')->only(['index', 'store', 'show', 'update',])->names('api.house_outs');
 Route::resource('visits', 'VisitController')->only(['index', 'store', 'show',])->names('api.visits');
-Route::resource('job_logs', 'JobLogController')->only(['index', 'store', 'show',])->names('api.job_logs');
+Route::resource('job_logs', 'JobLogController')->only(['index', 'store', 'show','destroy',])->names('api.job_logs');
 Route::resource('advises', 'AdviseController')->only(['index', 'store', 'show',])->names('api.advises');
 Route::resource('renews', 'RenewController')->only(['index', 'store', 'show',])->names('api.renews');
 Route::resource('reget_cards', 'RegetCardController')->only(['index', 'store', 'show',])->names('api.reget_cards');
