@@ -22,6 +22,7 @@ class RepairController extends ApiController
     public function store(Request $request)
     {
         $result = $request->user()->repairs()->create($request->only([
+            'house_id',
             'name',//签约人姓名
             'repair_date',//维修日期
             'matters',//维修事项

@@ -26,8 +26,10 @@ class Repair extends Model
         parent::boot();
         // 监听模型创建事件，在写入数据库之前触发
         static::creating(function ($model) {
-            $house = House::query()->where('user_id', Auth::id())->first();
-            $model->house_id = $house->id;
+            if (!$model->house_id) {
+                $house = House::query()->where('user_id', Auth::id())->first();
+                $model->house_id = $house->id;
+            }
         });
     }
 
