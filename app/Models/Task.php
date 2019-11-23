@@ -20,4 +20,8 @@ class Task extends Model
         'receipt_detail',//完成任务说明
         'receipt_images',//完成任务图片
     ];
+
+    public function executor(){
+        return $this->belongsTo(User::class,'executor_id','id');
+    }
 }
